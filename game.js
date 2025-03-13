@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 5)"
+const version = "0.045_1 Alpha - Wii U (build 6)"
 const fps = 30
 
 const items = {
@@ -239,7 +239,7 @@ function abbreviate(x) {
 
    var largest
 
-   for (const i in abbrs) {
+   for (i in abbrs) {
        if (x >= i && (!largest || i > largest)) {
           largest = i
        }
@@ -359,14 +359,14 @@ function load() {
    if (data) {
        const savedata = JSON.parse(data)
 
-       for (const thing in savedata) {
+       for (thing in savedata) {
            if (stats[thing] != null) {
                stats[thing] = savedata[thing]
            }
        }
    }
 
-   for (const data of items.structures) {
+   for (data of items.structures) {
        if (!stats.Structures[data.Name]) {
            stats.Structures[data.Name] = {
                Amount: 0,
@@ -377,14 +377,14 @@ function load() {
        else {
            const amt = stats.Structures[data.Name].Amount
            if (amt > 0) {
-               for (var i = 0; (i < amt); i++) {
+               for (i = 0; (i < amt); i++) {
                    data.Cost = Math.floor((data.Cost * 1.1))
                }
            }
        }
    }
 
-   for (const nm in settings) {
+   for (nm in settings) {
        const def = settings[nm]
 
        if (typeof(def) != "function" && (stats.Settings[nm] == null)) {
@@ -407,17 +407,17 @@ function load() {
    }
 
    setInterval(_ => {
-    for (const acv of items.achievements) {
+    for (acv of items.achievements) {
         if (!stats.Achievements[acv.Name]) {
             if (acv.Type == "Stat") {
-                for (const req in acv.Requirements) {
+                for (req in acv.Requirements) {
                     if (stats[req] >= acv.Requirements[req]) {
                         award(acv.Name)
                     }
                 }
             }
             else if (acv.Type == "Structures") {
-                for (const req in acv.Requirements) {
+                for (req in acv.Requirements) {
                     if (stats.Structures[req].Amount >= acv.Requirements[req]) {
                         award(acv.Name)
                     }
@@ -426,7 +426,7 @@ function load() {
             else if (acv.Type == "SumStructs") {
                 var sum = 0 
 
-                for (const struct in stats.Structures) {
+                for (struct in stats.Structures) {
                     sum += stats.Structures[struct].Amount
                 }
 
@@ -437,7 +437,7 @@ function load() {
             else if (acv.Type == "SumUpgrades") {
                 var len = 0
 
-                for (const i in stats.Upgrades) {
+                for (i in stats.Upgrades) {
                     len++
                 }
 
@@ -464,7 +464,7 @@ function save() {
 function find(array, string) {
    var result = false
 
-   for (const i in array) {
+   for (i in array) {
        if (i == string) {
            result = true
            break
@@ -477,7 +477,7 @@ function find(array, string) {
 function findfromiv(array, i, v) {
     var result
 
-    for (var x in array) {
+    for (x in array) {
         x = array[x]
 
         if (x[i] == v) {
@@ -490,9 +490,9 @@ function findfromiv(array, i, v) {
 }
 
 function available(reqs) {
-   for (const type in reqs) {
+   for (type in reqs) {
        if (type == "Structures") {
-           for (const struct in reqs[type]) {
+           for (struct in reqs[type]) {
                if (stats.Structures[struct]) {
                    if (stats.Structures[struct].Amount < reqs[type][struct]) {
                        return false
@@ -501,7 +501,7 @@ function available(reqs) {
            }
        }
        else {
-           for (const stat in reqs[type]) {
+           for (stat in reqs[type]) {
                if (stats[stat] < reqs[type][stat]) {
                    return false
                }
@@ -524,7 +524,7 @@ function shop(type, force) {
            else {
                shopopen = type
 
-               for (const item in list) {
+               for (item in list) {
                    const data = list[item]
   
                    if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
@@ -565,7 +565,7 @@ function shop(type, force) {
                                    sdata.Ps *= mult
                                }
                                else {
-                                   for (const buff in data) {
+                                   for (buff in data) {
                                        if (find(stats, buff)) {
                                            if (data.Multiply) {
                                                stats[buff] *= data[buff]
@@ -587,10 +587,10 @@ function shop(type, force) {
   
                                const otherboosts = data.OtherBoosts
                                if (otherboosts) {
-                                   for (const name in otherboosts) {
-                                       const boost = otherboosts[name]
+                                   for (nm in otherboosts) {
+                                       const boost = otherboosts[nm]
   
-                                       const sdata = stats.Structures[name]
+                                       const sdata = stats.Structures[nm]
   
                                        sdata.Mult += boost
   
@@ -623,7 +623,7 @@ function doStats() {
    const aui = document.getElementById("achievements")
    aui.innerHTML = null
 
-   for (const stat in stats) {
+   for (stat in stats) {
        const me = stats[stat]
 
        if (typeof(me) == "number") {
@@ -636,7 +636,7 @@ function doStats() {
        }
    }
 
-    for (const acv in stats.Achievements) {
+    for (acv in stats.Achievements) {
         const entry = document.getElementById("acvdummy").cloneNode(true)
         const c = entry.children
 
@@ -652,7 +652,7 @@ function doSettings() {
    const ui = document.getElementById("settings")
    ui.innerHTML = null
 
-   for (const nm in settings) {
+   for (nm in settings) {
        const set = settings[nm]
 
        if (typeof(set) == "function") {
@@ -805,7 +805,7 @@ document.getElementById("settingsbutton").addEventListener("click", _ => {
 
 document.getElementById("version").innerText = `v${version}`
 
-for (const nm in settings) {
+for (nm in settings) {
    const def = settings[nm]
 
    if (typeof(def) != "function") {
