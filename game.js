@@ -215,10 +215,10 @@ const settings = {
    decimals: 2   
 }
 const abbrs = { // Number abbreviations
-   [1e15]: "quadrillion",
-   [1e12]: "trillion",
-   [1e9]: "billion",
-   [1e6]: "million",
+   1e15: "quadrillion",
+   1e12: "trillion",
+   1e9: "billion",
+   1e6: "million",
 }
 
 // Functions
