@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 17a, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 17b, debug)"
 const fps = 30
 
 const gameitems = {
@@ -517,66 +517,69 @@ function available(reqs) {
         }
     }
 
+    console.log("Is available")
+
     return true
 }
 
-function purchase(wanted, type) {
-    console.log("Attempt to purchase " + wanted)
-    
+function purchase(name, type) {
+    console.log("Attempt to purchase " + name)
+
+    var data
     for (i in gameitems[type]) {
         const d = gameitems[type][i]
 
-        const result = findfromiv(d, "Name", wanted)
+        const result = findfromiv(d, "Name", name)
 
         if (result) {
-            wanted = result
+            data = result
             console.log("Got data for " + wanted + " proceeding with purchase...")
             break
         }
     }
 
-    if (stats.Coins >= wanted.Cost) {
-        console.log("Sufficient funds")
-        stats.Coins -= wanted.Cost
+    if (data && (stats.Coins >= data.Cost)) {
+        console.log("Data found and Sufficient funds")
+        stats.Coins -= data.Cost
 
         if (type != "upgrades") {
-            wanted.Cost = Math.floor(wanted.Cost * 1.1)
-            stats.Structures[wanted.Name].Amount++
+            data.Cost = Math.floor(data.Cost * 1.1)
+            stats.Structures[data.Name].Amount++
         }
         else {
-            stats.Purchased[wanted.Name] = true
+            stats.Purchased[data.Name] = true
         }
 
-        if (wanted.StructName) {
-            const sdata = stats.Structures[wanted.StructName]
+        if (data.StructName) {
+            const sdata = stats.Structures[data.StructName]
             const prod = (sdata.Ps * sdata.Amount)
-            const mult = wanted.StructMult || 2
+            const mult = data.StructMult || 2
 
             stats.CoinsPs += ((prod * mult) - prod)
             sdata.Ps *= mult
         }
         else {
-            for (buff in wanted) {
+            for (buff in data) {
                 if (find(stats, buff)) {
-                    if (wanted.Multiply) {
-                        stats[buff] *= wanted[buff]
+                    if (data.Multiply) {
+                        stats[buff] *= data[buff]
                     }
                     else {
                         if (type == "structures" && buff == "CoinsPs") {
-                            stats[buff] += stats.Structures[wanted.Name].Ps
+                            stats[buff] += stats.Structures[data.Name].Ps
                         }
                         else if (buff == "CoinsPcPs") {
-                            stats.CoinsPcPs += wanted[buff]
+                            stats.CoinsPcPs += data[buff]
                         }
                         else {
-                            stats[buff] += wanted[buff]
+                            stats[buff] += data[buff]
                         }
                     }
                 }
             }
         }
 
-        const otherboosts = wanted.OtherBoosts
+        const otherboosts = data.OtherBoosts
         if (otherboosts) {
             for (nm in otherboosts) {
                 const boost = otherboosts[nm]
@@ -596,7 +599,7 @@ function purchase(wanted, type) {
         refresh()
         shop(type, true)
 
-        console.log("Purchase of " + wanted.Name + " successful")
+        console.log("Purchase of " + data.Name + " successful")
     }
 }
 
@@ -642,7 +645,7 @@ function shop(type, force) {
                         button.innerText = "Purchase for " + abbreviate(thisdata.Cost) + " coins"
 
                         button.addEventListener("click", function() {
-                            purchase(button.id, type)
+                            purchase(this.id, type)
                         })
 
                         clone.hidden = false
