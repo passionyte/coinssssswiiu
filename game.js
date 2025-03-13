@@ -33,8 +33,9 @@ var shopopen
 var menurf
 var coinmpos
 var itemdummies = []
+var itembuycons = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 16b, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 16c, debug)"
 const fps = 30
 
 const gameitems = {
@@ -531,6 +532,7 @@ function shop(type, force) {
                 itemlist.removeChild(itemdummies[i])
             }
             itemdummies = []
+            itembuycons = []
 
             if (type == shopopen && !force) {
                 shopopen = null
@@ -562,10 +564,8 @@ function shop(type, force) {
                         const button = c[3]
                         button.innerText = "Purchase for " + abbreviate(data.Cost) + " coins"
 
-                        function purchase() {
-                            console.log("Attempting to purchase " + data.Name)
+                        itembuycons[data.Name] = function() {
                             if (stats.Coins >= data.Cost) {
-                                console.log("Sufficient funds")
                                 stats.Coins -= data.Cost
 
                                 if (type != "upgrades") {
@@ -626,7 +626,7 @@ function shop(type, force) {
                                 shop(type, true)
                             }
                         }
-                        button.addEventListener("click", purchase)
+                        button.addEventListener("click", itembuycons[data.Name])
 
                         clone.hidden = false
                         itemlist.appendChild(clone)
