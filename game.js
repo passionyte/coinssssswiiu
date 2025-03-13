@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 7)"
+const version = "0.045_1 Alpha - Wii U (build 8)"
 const fps = 30
 
 const items = {
@@ -215,10 +215,10 @@ const settings = {
    decimals: 2   
 }
 const abbrs = { // Number abbreviations
-   1e15: "quadrillion",
-   1e12: "trillion",
-   1e9: "billion",
-   1e6: "million",
+   quadrillion: 1e15,
+   trillion: 1e12,
+   billion: 1e9,
+   million: 1e6
 }
 
 // Functions
@@ -240,12 +240,13 @@ function abbreviate(x) {
    var largest
 
    for (i in abbrs) {
-       if (x >= i && (!largest || i > largest)) {
+       if (x >= abbrs[i] && (!largest || abbrs[i] > abbrs[largest])) {
           largest = i
        }
    }
 
-   return largest && (toString(smartround((x / largest))) + abbrs[largest]) || x
+   const r = smartround((x / abbrs[largest]))
+   return ((largest) && r + " " + largest) || x
 }
 
 function smartround(x) { // For when you don't want a billion decimals in a number
@@ -253,7 +254,7 @@ function smartround(x) { // For when you don't want a billion decimals in a numb
 
    if (d) {
        if (d > 0) {
-           d = Number("1e" + toString(d))
+           d = Number("1e" + d.toString())
        }
        else {
            return Math.round(x)
@@ -273,11 +274,11 @@ function randInt(min, max) {
 function refresh() {
    const coins = abbreviate(Math.floor(stats.Coins))
 
-   clicks.innerText = toString(coins) + " coins"
-   prod.innerText = toString(abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult))) + " coins/s"
+   clicks.innerText = coins.toString() + " coins"
+   prod.innerText = abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult)) + " coins/s"
 
    if (stats.Settings.dynamicsitetitle) {
-       document.title = toString(coins) + " coins - Passionyte's Coinsssss! for Wii U"
+       document.title = coins.toString() + " coins - Passionyte's Coinsssss! for Wii U"
    }
    else {
        document.title = "Passionyte's Coinsssss! for Wii U"
@@ -301,7 +302,7 @@ function effect(type, args) {
        var y
        var pc = false
        if (args.click) {
-            text.innerText = "+" + toString(abbreviate(smartround((stats.CoinsPc + stats.CoinsMPc))))
+            text.innerText = "+" + abbreviate(smartround((stats.CoinsPc + stats.CoinsMPc)))
             y = (coinmpos.y + randInt(-48, 48))
             st.left = ((coinmpos.x - 24) + randInt(-32, 32))+'px'
             st.top = y+'px'
@@ -314,7 +315,7 @@ function effect(type, args) {
                 st.left = ((bds.right - bds.left) * Math.random() + bds.left)
                 st.top = ((bds.bottom - bds.top) * Math.random() + bds.top)
 
-                y = Number(st.top)
+                y = parseInt(st.top)
             }
             else {
                 const pos = args.position
@@ -337,10 +338,10 @@ function effect(type, args) {
        const anim = setInterval(_ => {
             st.opacity -= 0.01
             if (!pc) {
-                st.top = toString((y - ((1 - st.opacity) * 100))) + "px"
+                st.top = (y - ((1 - st.opacity) * 100)).toString() + "px"
             }
             else {
-                st.top = toString((y - ((1 - st.opacity) * 10))) + "%"
+                st.top = (y - ((1 - st.opacity) * 10)).toString() + "%"
             }
             
        }, (insecs / 100))
@@ -543,7 +544,7 @@ function shop(type, force) {
                        c[2].innerText = data.Description || "???"
       
                        const button = c[3]
-                       button.innerText = "Purchase for " + toString(abbreviate(data.Cost)) + " coins"
+                       button.innerText = "Purchase for " + abbreviate(data.Cost) + " coins"
                        button.addEventListener("click", _=> {
                            if (stats.Coins >= data.Cost) {
                                stats.Coins -= data.Cost
