@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 13)"
+const gameversion = "0.045_1 Alpha - Wii U (build 14, debug)"
 const fps = 30
 
 const items = {
@@ -527,6 +527,8 @@ function shop(type, force) {
         console.log("Attempt to open shop menu " + type + " Forcing: " + force || false)
 
         const list = items[type]
+
+        console.log(list)
 
         if (list) {
             console.log("got 'list'")
