@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U"
+const version = "0.045_1 Alpha - Wii U (build 3)"
 const fps = 30
 
 const items = {
