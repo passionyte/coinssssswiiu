@@ -6,7 +6,6 @@ const bigbutton = document.getElementById("bigbutton")
 const clicks = document.getElementById("clicks")
 const prod = document.getElementById("clicksps")
 const itemlist = document.getElementById("items")
-const itemdummy = document.getElementById("itemdummy")
 const structb = document.getElementById("structures")
 const upgb = document.getElementById("upgrades")
 const effs = document.getElementById("effects")
@@ -551,7 +550,7 @@ function shop(type, force) {
                     console.log(available(data.Requirements))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
                         console.log("item is good to display")
-                        const clone = itemdummy.cloneNode(true)
+                        const clone = document.getElementById("itemdummy").cloneNode(true)
                         const c = clone.children
 
                         c[0].src = data.Icon || ""
