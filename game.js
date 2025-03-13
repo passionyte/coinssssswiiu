@@ -546,7 +546,7 @@ function shop(type, force) {
                     console.log(data.Hidden)
                     console.log(find(stats.Purchased, data.Name))
                     console.log(data.Cost)
-                    console.log(available(data.Requirements()))
+                    console.log(available(data.Requirements))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
                         console.log("item is good to display")
                         const clone = itemdummy.cloneNode(true)
