@@ -34,10 +34,10 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 14b, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 15, debug)"
 const fps = 30
 
-const items = {
+const gameitems = {
     structures: [
         Clicker = { Name: "Clicker", Cost: 15, CoinsPs: 0.1, Description: "Click click click..." },
         Miner = { Name: "Miner", Cost: 100, CoinsPs: 1, Description: "Hire a miner to mine more coins." },
@@ -185,10 +185,6 @@ const items = {
         Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 }
     ]
 }
-for (i in items) {
-    console.log(i)
-}
-console.log(items.structures)
 const fancynames = { // Any string you want to look fancy
     CoinsPs: "Coins per sec.",
     CoinsPsMult: "Coins per sec. multiplier",
@@ -373,8 +369,8 @@ function load() {
         }
     }
 
-    for (d in items.structures) {
-        d = items.structures[d]
+    for (d in gameitems.structures) {
+        d = gameitems.structures[d]
         if (!stats.Structures[d.Name]) {
             stats.Structures[d.Name] = {
                 Amount: 0,
@@ -413,8 +409,8 @@ function load() {
     }
 
     function astep() {
-        for (acv in items.achievements) {
-            acv = items.achievements[acv]
+        for (acv in gameitems.achievements) {
+            acv = gameitems.achievements[acv]
             if (!stats.Achievements[acv.Name]) {
                 if (acv.Type == "Stat") {
                     for (req in acv.Requirements) {
@@ -530,7 +526,7 @@ function shop(type, force) {
     if (type) {
         console.log("Attempt to open shop menu " + type + " Forcing: " + force || false)
 
-        const list = items[type]
+        const list = gameitems[type]
 
         console.log(list)
 
@@ -670,7 +666,7 @@ function doStats() {
         const c = entry.children
 
         c[0].innerText = acv
-        c[2].innerText = findfromiv(items.achievements, "Name", acv).Description
+        c[2].innerText = findfromiv(gameitems.achievements, "Name", acv).Description
 
         entry.style.display = "block"
         aui.appendChild(entry)
