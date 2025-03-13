@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 11)"
+const gameversion = "0.045_1 Alpha - Wii U (build 12)"
 const fps = 30
 
 const items = {
@@ -193,7 +193,7 @@ const fancynames = { // Any string you want to look fancy
     CoinsMPc: "Coins per click PS bonus",
     TotalCoins: "Total coins"
 }
-const settings = {
+const gamesettings = {
     // Function button types
     resetgame: function () {
         if (confirm("Are you sure you want to reset your game?")) {
@@ -389,8 +389,8 @@ function load() {
         }
     }
 
-    for (nm in settings) {
-        const def = settings[nm]
+    for (nm in gamesettings) {
+        const def = gamesettings[nm]
 
         if (typeof (def) != "function" && (stats.Settings[nm] == null)) {
             stats.Settings[nm] = def
@@ -663,8 +663,8 @@ function doSettings() {
     const ui = document.getElementById("settings")
     ui.innerHTML = null
 
-    for (nm in settings) {
-        const set = settings[nm]
+    for (nm in gamesettings) {
+        const set = gamesettings[nm]
 
         if (typeof (set) == "function") {
             const entry = document.getElementById("buttondummy").cloneNode(true)
@@ -808,6 +808,7 @@ function strhandler() {
     shop("structures")
 }
 
+shop("structures")
 structb.addEventListener("click", strhandler)
 
 function upghandler() {
@@ -830,10 +831,10 @@ document.getElementById("settingsbutton").addEventListener("click", settingshand
 
 // Hard coded crap
 
-document.getElementById("version").innerText = "v" + version
+document.getElementById("version").innerText = "v" + gameversion
 
-for (nm in settings) {
-    const def = settings[nm]
+for (nm in gamesettings) {
+    const def = gamesettings[nm]
 
     if (typeof (def) != "function") {
         stats.Settings[nm] = def
