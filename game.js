@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 12)"
+const gameversion = "0.045_1 Alpha - Wii U (build 13)"
 const fps = 30
 
 const items = {
@@ -350,7 +350,6 @@ function effect(type, args) {
         function b() {
             clearInterval(anim)
             effs.removeChild(text)
-            text.remove()
         }
         setTimeout(b, insecs)
     }
@@ -518,11 +517,15 @@ function available(reqs) {
         }
     }
 
+    console.log("Is available")
+
     return true
 }
 
 function shop(type, force) {
     if (type) {
+        console.log("Attempt to open shop menu " + type + " Forcing: " + force || false)
+
         const list = items[type]
 
         if (list) {
@@ -808,7 +811,6 @@ function strhandler() {
     shop("structures")
 }
 
-shop("structures")
 structb.addEventListener("click", strhandler)
 
 function upghandler() {
