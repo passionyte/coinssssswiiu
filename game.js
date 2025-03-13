@@ -517,55 +517,66 @@ function available(reqs) {
         }
     }
 
-    console.log("Is available")
-
     return true
 }
 
-function purchase(data, type) {
-    console.log("Attempt to purchase " + data.Name)
-    if (stats.Coins >= data.Cost) {
+function purchase(wanted, type) {
+    console.log("Attempt to purchase " + wanted)
+    
+    for (i in gameitems[type]) {
+        const d = gameitems[type][i]
+
+        const result = findfromiv(d, "Name", wanted)
+
+        if (result) {
+            wanted = result
+            console.log("Got data for " + wanted + " proceeding with purchase...")
+            break
+        }
+    }
+
+    if (stats.Coins >= wanted.Cost) {
         console.log("Sufficient funds")
-        stats.Coins -= data.Cost
+        stats.Coins -= wanted.Cost
 
         if (type != "upgrades") {
-            data.Cost = Math.floor(data.Cost * 1.1)
-            stats.Structures[data.Name].Amount++
+            wanted.Cost = Math.floor(wanted.Cost * 1.1)
+            stats.Structures[wanted.Name].Amount++
         }
         else {
-            stats.Purchased[data.Name] = true
+            stats.Purchased[wanted.Name] = true
         }
 
-        if (data.StructName) {
-            const sdata = stats.Structures[data.StructName]
+        if (wanted.StructName) {
+            const sdata = stats.Structures[wanted.StructName]
             const prod = (sdata.Ps * sdata.Amount)
-            const mult = data.StructMult || 2
+            const mult = wanted.StructMult || 2
 
             stats.CoinsPs += ((prod * mult) - prod)
             sdata.Ps *= mult
         }
         else {
-            for (buff in data) {
+            for (buff in wanted) {
                 if (find(stats, buff)) {
-                    if (data.Multiply) {
-                        stats[buff] *= data[buff]
+                    if (wanted.Multiply) {
+                        stats[buff] *= wanted[buff]
                     }
                     else {
                         if (type == "structures" && buff == "CoinsPs") {
-                            stats[buff] += stats.Structures[data.Name].Ps
+                            stats[buff] += stats.Structures[wanted.Name].Ps
                         }
                         else if (buff == "CoinsPcPs") {
-                            stats.CoinsPcPs += data[buff]
+                            stats.CoinsPcPs += wanted[buff]
                         }
                         else {
-                            stats[buff] += data[buff]
+                            stats[buff] += wanted[buff]
                         }
                     }
                 }
             }
         }
 
-        const otherboosts = data.OtherBoosts
+        const otherboosts = wanted.OtherBoosts
         if (otherboosts) {
             for (nm in otherboosts) {
                 const boost = otherboosts[nm]
@@ -585,7 +596,7 @@ function purchase(data, type) {
         refresh()
         shop(type, true)
 
-        console.log("Purchase of " + data.Name + " successful")
+        console.log("Purchase of " + wanted.Name + " successful")
     }
 }
 
@@ -627,10 +638,11 @@ function shop(type, force) {
                         c[2].innerText = thisdata.Description || "???"
 
                         const button = c[3]
+                        button.id = thisdata.Name
                         button.innerText = "Purchase for " + abbreviate(thisdata.Cost) + " coins"
 
                         button.addEventListener("click", function() {
-                            purchase(thisdata, type)
+                            purchase(button.id, type)
                         })
 
                         clone.hidden = false
