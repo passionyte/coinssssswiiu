@@ -366,19 +366,19 @@ function load() {
        }
    }
 
-   for (data of items.structures) {
-       if (!stats.Structures[data.Name]) {
-           stats.Structures[data.Name] = {
+   for (d of items.structures) {
+       if (!stats.Structures[d.Name]) {
+           stats.Structures[d.Name] = {
                Amount: 0,
-               Ps: data.CoinsPs,
+               Ps: d.CoinsPs,
                Mult: 1
            }
        }
        else {
-           const amt = stats.Structures[data.Name].Amount
+           const amt = stats.Structures[d.Name].Amount
            if (amt > 0) {
                for (i = 0; (i < amt); i++) {
-                   data.Cost = Math.floor((data.Cost * 1.1))
+                   d.Cost = Math.floor((d.Cost * 1.1))
                }
            }
        }
