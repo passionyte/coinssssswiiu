@@ -33,7 +33,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 15, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 15b, debug)"
 const fps = 30
 
 const gameitems = {
@@ -631,7 +631,7 @@ function shop(type, force) {
                         }
                         button.addEventListener("click", purchase)
 
-                        clone.hidden = false
+                        // clone.hidden = false
                         itemlist.appendChild(clone)
                     }
                 }
