@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 16, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 16b, debug)"
 const fps = 30
 
 const gameitems = {
@@ -524,15 +524,9 @@ function available(reqs) {
 
 function shop(type, force) {
     if (type) {
-        console.log("Attempt to open shop menu " + type + " Forcing: " + force || false)
-
         const list = gameitems[type]
 
-        console.log(list)
-
         if (list) {
-            console.log("got 'list'")
-
             for (i in itemdummies) {
                 itemlist.removeChild(itemdummies[i])
             }
@@ -543,19 +537,11 @@ function shop(type, force) {
             }
             else {
                 shopopen = type
-                
-                console.log(list)
 
                 for (item in list) {
-                    console.log(item)
                     const data = list[item]
 
-                    console.log(data.Hidden)
-                    console.log(find(stats.Purchased, data.Name))
-                    console.log(data.Cost)
-                    console.log(available(data.Requirements))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
-                        console.log("item is good to display")
                         const clone = document.getElementById("itemdummy").cloneNode(true)
                         itemdummies.push(clone)
                         clone.id = data.Name
@@ -577,7 +563,9 @@ function shop(type, force) {
                         button.innerText = "Purchase for " + abbreviate(data.Cost) + " coins"
 
                         function purchase() {
+                            console.log("Attempting to purchase " + data.Name)
                             if (stats.Coins >= data.Cost) {
+                                console.log("Sufficient funds")
                                 stats.Coins -= data.Cost
 
                                 if (type != "upgrades") {
