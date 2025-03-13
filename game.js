@@ -6,7 +6,6 @@ const bigbutton = document.getElementById("bigbutton")
 const clicks = document.getElementById("clicks")
 const prod = document.getElementById("clicksps")
 const itemlist = document.getElementById("items")
-const itemdummy = document.getElementById("itemdummy").cloneNode(true)
 const structb = document.getElementById("structures")
 const upgb = document.getElementById("upgrades")
 const effs = document.getElementById("effects")
@@ -33,8 +32,9 @@ var menuopen
 var shopopen
 var menurf
 var coinmpos
+var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 15c, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 16, debug)"
 const fps = 30
 
 const gameitems = {
@@ -532,7 +532,12 @@ function shop(type, force) {
 
         if (list) {
             console.log("got 'list'")
-            itemlist.innerHTML = null
+
+            for (i in itemdummies) {
+                itemlist.removeChild(itemdummies[i])
+            }
+            itemdummies = []
+
             if (type == shopopen && !force) {
                 shopopen = null
             }
@@ -551,7 +556,10 @@ function shop(type, force) {
                     console.log(available(data.Requirements))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
                         console.log("item is good to display")
-                        const clone = itemdummy.cloneNode(true)
+                        const clone = document.getElementById("itemdummy").cloneNode(true)
+                        itemdummies.push(clone)
+                        clone.id = data.Name
+
                         const c = clone.children
 
                         c[0].src = data.Icon || ""
