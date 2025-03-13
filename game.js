@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 8)"
+const version = "0.045_1 Alpha - Wii U (build 9)"
 const fps = 30
 
 const items = {
@@ -335,7 +335,7 @@ function effect(type, args) {
 
        const insecs = (args.lifetime * 1000)
 
-       const anim = setInterval(_ => {
+       function a() {
             st.opacity -= 0.01
             if (!pc) {
                 st.top = (y - ((1 - st.opacity) * 100)).toString() + "px"
@@ -343,13 +343,16 @@ function effect(type, args) {
             else {
                 st.top = (y - ((1 - st.opacity) * 10)).toString() + "%"
             }
-            
-       }, (insecs / 100))
-       setTimeout(_ => {
-           clearInterval(anim)
-           effs.removeChild(text)
-           text.remove()
-       }, insecs)
+       }
+
+       const anim = setInterval(a, (insecs / 100))
+
+       function b() {
+            clearInterval(anim)
+            effs.removeChild(text)
+            text.remove()
+       }
+       setTimeout(b, insecs)
    }
 }
 
@@ -402,12 +405,10 @@ function load() {
    loaded = true
 
    if (stats.Settings.autosaving) {
-       setInterval(_=> {
-           save()
-       }, 30000)
+       setInterval(save, 30000)
    }
 
-   setInterval(_ => {
+   function astep() {
     for (acv of items.achievements) {
         if (!stats.Achievements[acv.Name]) {
             if (acv.Type == "Stat") {
@@ -448,16 +449,21 @@ function load() {
             }
         }
     }
-}, 2000)
+   }
+
+   setInterval(astep, 2000)
 }
 
 function save() {
    if (stats.Coins > 0 && loaded && !savecd) {
        localStorage.setItem("Data", JSON.stringify(stats))
        savecd = true
-       setTimeout(_ => {
-           savecd = false
-       }, 15000)
+
+       function a() {
+         savecd = false
+       }
+       setTimeout(a, 15000)
+
        effect("Text", {lifetime: 3, position: {x: 40, y: 75, pc: true}, text: "Saved game"})
    }
 }
@@ -545,68 +551,69 @@ function shop(type, force) {
       
                        const button = c[3]
                        button.innerText = "Purchase for " + abbreviate(data.Cost) + " coins"
-                       button.addEventListener("click", _=> {
-                           if (stats.Coins >= data.Cost) {
-                               stats.Coins -= data.Cost
-                              
-                               if (type != "upgrades") {
-                                   data.Cost = Math.floor(data.Cost * 1.1)
-                                   stats.Structures[data.Name].Amount++
-                               }
-                               else {
-                                   stats.Purchased[data.Name] = true
-                               }
-                              
-                               if (data.StructName) {
-                                   const sdata = stats.Structures[data.StructName]
-                                   const prod = (sdata.Ps * sdata.Amount)
-                                   const mult = data.StructMult || 2
-  
-                                   stats.CoinsPs += ((prod * mult) - prod)
-                                   sdata.Ps *= mult
-                               }
-                               else {
-                                   for (buff in data) {
-                                       if (find(stats, buff)) {
-                                           if (data.Multiply) {
-                                               stats[buff] *= data[buff]
-                                           }
-                                           else {
-                                               if (type == "structures" && buff == "CoinsPs") {
-                                                   stats[buff] += stats.Structures[data.Name].Ps
-                                               }
-                                               else if (buff == "CoinsPcPs") {
-                                                   stats.CoinsPcPs += data[buff]
-                                               }
-                                               else {
-                                                   stats[buff] += data[buff]
-                                               }
-                                           }
-                                       }
-                                   }
-                               }
-  
-                               const otherboosts = data.OtherBoosts
-                               if (otherboosts) {
-                                   for (nm in otherboosts) {
-                                       const boost = otherboosts[nm]
-  
-                                       const sdata = stats.Structures[nm]
-  
-                                       sdata.Mult += boost
-  
-                                       const prod = sdata.Ps
-                                       sdata.Ps = ((prod * sdata.Mult) - prod)
-                                       stats.CoinsPs += (sdata.Ps - prod)
-                                   }
-                               }
-  
-                               stats.CoinsMPc = (stats.CoinsPs * stats.CoinsPcPs)
-                              
-                               refresh()
-                               shop(type, true)
-                           }
-                       })
+
+                       function purchase() {
+                        if (stats.Coins >= data.Cost) {
+                            stats.Coins -= data.Cost
+                           
+                            if (type != "upgrades") {
+                                data.Cost = Math.floor(data.Cost * 1.1)
+                                stats.Structures[data.Name].Amount++
+                            }
+                            else {
+                                stats.Purchased[data.Name] = true
+                            }
+                           
+                            if (data.StructName) {
+                                const sdata = stats.Structures[data.StructName]
+                                const prod = (sdata.Ps * sdata.Amount)
+                                const mult = data.StructMult || 2
+
+                                stats.CoinsPs += ((prod * mult) - prod)
+                                sdata.Ps *= mult
+                            }
+                            else {
+                                for (buff in data) {
+                                    if (find(stats, buff)) {
+                                        if (data.Multiply) {
+                                            stats[buff] *= data[buff]
+                                        }
+                                        else {
+                                            if (type == "structures" && buff == "CoinsPs") {
+                                                stats[buff] += stats.Structures[data.Name].Ps
+                                            }
+                                            else if (buff == "CoinsPcPs") {
+                                                stats.CoinsPcPs += data[buff]
+                                            }
+                                            else {
+                                                stats[buff] += data[buff]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            const otherboosts = data.OtherBoosts
+                            if (otherboosts) {
+                                for (nm in otherboosts) {
+                                    const boost = otherboosts[nm]
+
+                                    const sdata = stats.Structures[nm]
+
+                                    sdata.Mult += boost
+
+                                    const prod = sdata.Ps
+                                    sdata.Ps = ((prod * sdata.Mult) - prod)
+                                    stats.CoinsPs += (sdata.Ps - prod)
+                                }
+                            }
+
+                            stats.CoinsMPc = (stats.CoinsPs * stats.CoinsPcPs)
+                           
+                            refresh()
+                            shop(type, true)
+                       }
+                       button.addEventListener("click", purchase)
       
                        clone.hidden = false
                        itemlist.appendChild(clone)
@@ -674,13 +681,15 @@ function doSettings() {
            entry.style.display = "block"
            ui.appendChild(entry)
 
-           b.addEventListener("click", _ => {
-               stats.Settings[nm] = (!stats.Settings[nm])
-               doSettings()
-               if (shopopen) {
-                   shop(shopopen, true)
-               }
-           })
+           function handler() {
+                stats.Settings[nm] = (!stats.Settings[nm])
+                doSettings()
+                if (shopopen) {
+                    shop(shopopen, true)
+                }
+           }
+
+           b.addEventListener("click", handler)
        }
        else {
            const mytype = typeof(set)
@@ -690,21 +699,24 @@ function doSettings() {
            c[0].innerText = nm.toUpperCase() + " : "
            entry.style.display = "block"
            ui.appendChild(entry)
-           c[2].addEventListener("click", _ => {
-               var input = c[1].value
 
-               if (mytype == "number") {
-                   input = Number(input)
+            function handler() {
+                var input = c[1].value
 
-                   if (!isNaN(input)) {
-                       stats.Settings[nm] = input
-                       doSettings()
-                       if (shopopen) {
-                           shop(shopopen, true)
-                       }
-                   }
-               }
-           })
+                if (mytype == "number") {
+                    input = Number(input)
+ 
+                    if (!isNaN(input)) {
+                        stats.Settings[nm] = input
+                        doSettings()
+                        if (shopopen) {
+                            shop(shopopen, true)
+                        }
+                    }
+                }
+            }
+
+           c[2].addEventListener("click", handler)
        }
    }
 }
@@ -755,52 +767,63 @@ function menu(type) {
 
 // Listeners
 
-bigbutton.addEventListener("click", _ => {
-   const x = (stats.CoinsPc + stats.CoinsMPc)
+function coinclick() {
+    const x = (stats.CoinsPc + stats.CoinsMPc)
    stats.Coins += x
    stats.TotalCoins += x
    stats.Clicks++
    refresh()
    effect("Text", {click: true, lifetime: 1})
-})
+}
 
-bigbutton.addEventListener("mousemove", ev => {
+bigbutton.addEventListener("click", coinclick)
+
+function handlempos(ev) {
     coinmpos = {x: ev.clientX, y: ev.clientY}
-})
+}
 
-bigbutton.addEventListener("mousedown", _ => {
+bigbutton.addEventListener("mousemove", handlempos)
+
+function ondown() {
     bigbutton.style.width = 48 + "%"
     bigbutton.style.left = 1 + "%"
     bigbutton.style.top = 1 + "%"
-})
+}
 
-bigbutton.addEventListener("mouseup", _ => {
+bigbutton.addEventListener("mousedown", ondown)
+
+function onup() {
     bigbutton.style.width = 50 + "%"
     bigbutton.style.left = 0
     bigbutton.style.top = 0
-})
+}
 
-bigbutton.addEventListener("mouseleave", _ => {
-    bigbutton.style.width = 50 + "%"
-    bigbutton.style.left = 0
-    bigbutton.style.top = 0
-})
+bigbutton.addEventListener("mouseup", onup)
+bigbutton.addEventListener("mouseleave", onup)
 
-structb.addEventListener("click", _ => {
-   shop("structures")
-})
+function strhandler() {
+    shop("structures")
+}
 
-upgb.addEventListener("click", _ => {
-   shop("upgrades")
-})
+structb.addEventListener("click", strhandler)
 
-document.getElementById("statsbutton").addEventListener("click", _ => {
-   menu("stats")
-})
+function upghandler() {
+    shop("upgrades")
+}
 
-document.getElementById("settingsbutton").addEventListener("click", _ => {
-   menu("settings")
-})
+upgb.addEventListener("click", upghandler)
+
+function statshandler() {
+    menu("stats")
+}
+
+document.getElementById("statsbutton").addEventListener("click", statshandler)
+
+function settingshandler() {
+    menu("settings")
+}
+
+document.getElementById("settingsbutton").addEventListener("click", settingshandler)
 
 // Hard coded crap
 
@@ -814,11 +837,13 @@ for (nm in settings) {
    }
 }
 
-setInterval(_ => {
-   const x = ((stats.CoinsPs * stats.CoinsPsMult) / fps)
-   stats.Coins += x
-   stats.TotalCoins += x
-   refresh()
-}, fps)
+function step() {
+    const x = ((stats.CoinsPs * stats.CoinsPsMult) / fps)
+    stats.Coins += x
+    stats.TotalCoins += x
+    refresh()
+}
+
+setInterval(step, fps)
 
 setTimeout(load, 1000)
