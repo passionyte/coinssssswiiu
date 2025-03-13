@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 17c, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 17d, debug)"
 const fps = 30
 
 const gameitems = {
@@ -486,10 +486,24 @@ function findfromiv(array, i, v) {
     var result
 
     for (x in array) {
-        x = array[x]
+        y = array[x]
 
-        if (x[i] == v) {
+        if (y[i] == v) {
             result = x
+            break
+        }
+    }
+
+    return result
+}
+
+function getitem(name, type) {
+    var result
+
+    for (i in gameitems[type]) {
+        const table = gameitems[type][i]
+        if (table.Name && table.Name == name) {
+            result = table
             break
         }
     }
@@ -527,15 +541,11 @@ function purchase(name, type) {
 
     var data
     for (i in gameitems[type]) {
-        console.log(i)
-        const d = gameitems[type][i]
-        console.log(d)
-
-        const result = findfromiv(d, "Name", name)
+        const result = getitem(name, type)
 
         if (result) {
             data = result
-            console.log("Got data for " + wanted + " proceeding with purchase...")
+            console.log("Got data for " + name + " proceeding with purchase...")
             break
         }
     }
