@@ -195,22 +195,24 @@ const fancynames = { // Any string you want to look fancy
 }
 const settings = {
    // Function button types
-   ["Reset game"]: function() {
+   resetgame: function() {
        if (confirm("Are you sure you want to reset your game?")) {
            localStorage.clear()
            location.reload()
        }
    },
-   ["Save game"]: save(),
+   savegame: function() { 
+     save()
+   },
 
    // Boolean types
-   ["Auto saving"]: true,
-   ["Short numbers"]: true,
-   ["Dynamic site title"]: true,
-   ["Text effects"]: true,
+   autosaving: true,
+   shortnumbers: true,
+   dynamicsitetitle: true,
+   texteffects: true,
 
    // Input types
-   ["Decimals"]: 2   
+   decimals: 2   
 }
 const abbrs = { // Number abbreviations
    [1e15]: "quadrillion",
@@ -221,12 +223,17 @@ const abbrs = { // Number abbreviations
 
 // Functions
 
+function legacify(name) {
+    const lowered = name.toLowerCase()
+    return lowered.replace(" ", "")
+}
+
 function bool(a) {
    return ((a) && "ON") || "OFF"
 }
 
 function abbreviate(x) {
-   if (!stats.Settings["Short numbers"]) {
+   if (!stats.Settings.shortnumbers) {
        return x
    }
 
@@ -242,7 +249,7 @@ function abbreviate(x) {
 }
 
 function smartround(x) { // For when you don't want a billion decimals in a number
-   d = stats.Settings.Decimals
+   d = stats.Settings.decimals
 
    if (d) {
        if (d > 0) {
@@ -269,7 +276,7 @@ function refresh() {
    clicks.innerText = `${coins} coins`
    prod.innerText = `${abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult))} coins/s`
 
-   if (stats.Settings["Dynamic site title"]) {
+   if (stats.Settings.dynamicsitetitle) {
        document.title = `${coins} coins - Passionyte's Coinsssss! for Wii U`
    }
    else {
@@ -283,7 +290,7 @@ function award(acv) {
 }
 
 function effect(type, args) {
-   if (!stats.Settings[`${type} effects`]) {
+   if (!stats.Settings[`${legacify(type)}effects`]) {
         return
    }
 
@@ -393,7 +400,7 @@ function load() {
 
    loaded = true
 
-   if (stats.Settings["Auto saving"]) {
+   if (stats.Settings.autosaving) {
        setInterval(_=> {
            save()
        }, 30000)
@@ -652,7 +659,7 @@ function doSettings() {
            const entry = document.getElementById("buttondummy").cloneNode(true)
 
            const b = entry.children[0]
-           b.innerText = nm
+           b.innerText = nm.toUpperCase()
            entry.style.display = "block"
            ui.appendChild(entry)
 
@@ -662,7 +669,7 @@ function doSettings() {
            const entry = document.getElementById("booldummy").cloneNode(true)
 
            const b = entry.children[0]
-           b.innerText = `${nm} : ${bool(stats.Settings[nm])}`
+           b.innerText = `${nm.toUpperCase()} : ${bool(stats.Settings[nm])}`
            entry.style.display = "block"
            ui.appendChild(entry)
 
@@ -679,7 +686,7 @@ function doSettings() {
            const entry = document.getElementById("inputdummy").cloneNode(true)
           
            const c = entry.children
-           c[0].innerText = `${nm} : `
+           c[0].innerText = `${nm.toUpperCase()} : `
            entry.style.display = "block"
            ui.appendChild(entry)
            c[2].addEventListener("click", _ => {
