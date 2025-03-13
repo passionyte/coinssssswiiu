@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 6)"
+const version = "0.045_1 Alpha - Wii U (build 7)"
 const fps = 30
 
 const items = {
@@ -245,7 +245,7 @@ function abbreviate(x) {
        }
    }
 
-   return largest && `${smartround((x / largest))} ${abbrs[largest]}`|| x
+   return largest && (toString(smartround((x / largest))) + abbrs[largest]) || x
 }
 
 function smartround(x) { // For when you don't want a billion decimals in a number
@@ -253,7 +253,7 @@ function smartround(x) { // For when you don't want a billion decimals in a numb
 
    if (d) {
        if (d > 0) {
-           d = Number(`1e${d}`)
+           d = Number("1e" + toString(d))
        }
        else {
            return Math.round(x)
@@ -273,11 +273,11 @@ function randInt(min, max) {
 function refresh() {
    const coins = abbreviate(Math.floor(stats.Coins))
 
-   clicks.innerText = `${coins} coins`
-   prod.innerText = `${abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult))} coins/s`
+   clicks.innerText = toString(coins) + " coins"
+   prod.innerText = toString(abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult))) + " coins/s"
 
    if (stats.Settings.dynamicsitetitle) {
-       document.title = `${coins} coins - Passionyte's Coinsssss! for Wii U`
+       document.title = toString(coins) + " coins - Passionyte's Coinsssss! for Wii U"
    }
    else {
        document.title = "Passionyte's Coinsssss! for Wii U"
@@ -286,11 +286,11 @@ function refresh() {
 
 function award(acv) {
     stats.Achievements[acv] = true
-    effect("Text", {lifetime: 4, position: {x: 40, y: 75, pc: true}, text: `Unlocked: ${acv}!`})
+    effect("Text", {lifetime: 4, position: {x: 40, y: 75, pc: true}, text: "Unlocked: " + acv + "!"})
 }
 
 function effect(type, args) {
-   if (!stats.Settings[`${legacify(type)}effects`]) {
+   if (!stats.Settings[legacify(type) + "effects"]) {
         return
    }
 
@@ -301,7 +301,7 @@ function effect(type, args) {
        var y
        var pc = false
        if (args.click) {
-            text.innerText = `+${abbreviate(smartround((stats.CoinsPc + stats.CoinsMPc)))}`
+            text.innerText = "+" + toString(abbreviate(smartround((stats.CoinsPc + stats.CoinsMPc))))
             y = (coinmpos.y + randInt(-48, 48))
             st.left = ((coinmpos.x - 24) + randInt(-32, 32))+'px'
             st.top = y+'px'
@@ -337,10 +337,10 @@ function effect(type, args) {
        const anim = setInterval(_ => {
             st.opacity -= 0.01
             if (!pc) {
-                st.top = `${(y - ((1 - st.opacity) * 100))}px`
+                st.top = toString((y - ((1 - st.opacity) * 100))) + "px"
             }
             else {
-                st.top = `${(y - ((1 - st.opacity) * 10))}%`
+                st.top = toString((y - ((1 - st.opacity) * 10))) + "%"
             }
             
        }, (insecs / 100))
@@ -535,7 +535,7 @@ function shop(type, force) {
   
                        const sdata = stats.Structures[data.Name]
                        if (sdata) {
-                           c[1].innerText = `${data.Name} - ${stats.Structures[data.Name].Amount}`|| "???"
+                           c[1].innerText = (data.Name + " - " + stats.Structures[data.Name].Amount) || "???"
                        }
                        else {
                            c[1].innerText = data.Name || "???"
@@ -543,7 +543,7 @@ function shop(type, force) {
                        c[2].innerText = data.Description || "???"
       
                        const button = c[3]
-                       button.innerText = `Purchase for ${abbreviate(data.Cost)} coins`
+                       button.innerText = "Purchase for " + toString(abbreviate(data.Cost)) + " coins"
                        button.addEventListener("click", _=> {
                            if (stats.Coins >= data.Cost) {
                                stats.Coins -= data.Cost
@@ -629,7 +629,7 @@ function doStats() {
        if (typeof(me) == "number") {
            const entry = document.getElementById("statdummy").cloneNode(true)
            const c = entry.children
-           c[0].innerText = `${fancynames[stat] || stat} : `
+           c[0].innerText = fancynames[stat] || stat + " : "
            c[1].innerText = abbreviate(smartround(me))
            entry.style.display = "block"
            sui.appendChild(entry)
@@ -669,7 +669,7 @@ function doSettings() {
            const entry = document.getElementById("booldummy").cloneNode(true)
 
            const b = entry.children[0]
-           b.innerText = `${nm.toUpperCase()} : ${bool(stats.Settings[nm])}`
+           b.innerText = nm.toUpperCase() + " : " + bool(stats.Settings[nm])
            entry.style.display = "block"
            ui.appendChild(entry)
 
@@ -686,7 +686,7 @@ function doSettings() {
            const entry = document.getElementById("inputdummy").cloneNode(true)
           
            const c = entry.children
-           c[0].innerText = `${nm.toUpperCase()} : `
+           c[0].innerText = nm.toUpperCase() + " : "
            entry.style.display = "block"
            ui.appendChild(entry)
            c[2].addEventListener("click", _ => {
@@ -803,7 +803,7 @@ document.getElementById("settingsbutton").addEventListener("click", _ => {
 
 // Hard coded crap
 
-document.getElementById("version").innerText = `v${version}`
+document.getElementById("version").innerText = "v" + version
 
 for (nm in settings) {
    const def = settings[nm]
