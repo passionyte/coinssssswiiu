@@ -6,6 +6,7 @@ const bigbutton = document.getElementById("bigbutton")
 const clicks = document.getElementById("clicks")
 const prod = document.getElementById("clicksps")
 const itemlist = document.getElementById("items")
+const itemdummy = document.getElementById("itemdummy").cloneNode(true)
 const structb = document.getElementById("structures")
 const upgb = document.getElementById("upgrades")
 const effs = document.getElementById("effects")
@@ -33,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 15b, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 15c, debug)"
 const fps = 30
 
 const gameitems = {
@@ -550,7 +551,7 @@ function shop(type, force) {
                     console.log(available(data.Requirements))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
                         console.log("item is good to display")
-                        const clone = document.getElementById("itemdummy").cloneNode(true)
+                        const clone = itemdummy.cloneNode(true)
                         const c = clone.children
 
                         c[0].src = data.Icon || ""
@@ -631,7 +632,7 @@ function shop(type, force) {
                         }
                         button.addEventListener("click", purchase)
 
-                        // clone.hidden = false
+                        clone.hidden = false
                         itemlist.appendChild(clone)
                     }
                 }
