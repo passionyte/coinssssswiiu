@@ -529,17 +529,26 @@ function shop(type, force) {
         const list = items[type]
 
         if (list) {
+            console.log("got 'list'")
             itemlist.innerHTML = null
             if (type == shopopen && !force) {
                 shopopen = null
             }
             else {
                 shopopen = type
+                
+                console.log(list)
 
                 for (item in list) {
+                    console.log(item)
                     const data = list[item]
 
+                    console.log(data.Hidden)
+                    console.log(find(stats.Purchased, data.Name))
+                    console.log(data.Cost)
+                    console.log(available(data.Requirements()))
                     if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
+                        console.log("item is good to display")
                         const clone = itemdummy.cloneNode(true)
                         const c = clone.children
 
