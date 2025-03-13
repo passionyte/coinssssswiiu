@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 17, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 17a, debug)"
 const fps = 30
 
 const gameitems = {
@@ -605,32 +605,32 @@ function shop(type, force) {
             else {
                 shopopen = type
 
-                for (item in list) {
-                    const data = list[item]
+                for (thisitem in list) {
+                    var thisdata = list[thisitem]
 
-                    if ((data.Hidden == null) && (type == "structures" || !find(stats.Purchased, data.Name)) && (data.Cost != null) && (available(data.Requirements))) {
+                    if ((thisdata.Hidden == null) && (type == "structures" || !find(stats.Purchased, thisdata.Name)) && (thisdata.Cost != null) && (available(thisdata.Requirements))) {
                         const clone = document.getElementById("itemdummy").cloneNode(true)
                         itemdummies.push(clone)
-                        clone.id = data.Name
+                        clone.id = thisdata.Name
 
                         const c = clone.children
 
-                        c[0].src = data.Icon || ""
+                        c[0].src = thisdata.Icon || ""
 
-                        const sdata = stats.Structures[data.Name]
+                        const sdata = stats.Structures[thisdata.Name]
                         if (sdata) {
-                            c[1].innerText = (data.Name + " - " + stats.Structures[data.Name].Amount) || "???"
+                            c[1].innerText = (thisdata.Name + " - " + sdata.Amount) || "???"
                         }
                         else {
-                            c[1].innerText = data.Name || "???"
+                            c[1].innerText = thisdata.Name || "???"
                         }
-                        c[2].innerText = data.Description || "???"
+                        c[2].innerText = thisdata.Description || "???"
 
                         const button = c[3]
-                        button.innerText = "Purchase for " + abbreviate(data.Cost) + " coins"
+                        button.innerText = "Purchase for " + abbreviate(thisdata.Cost) + " coins"
 
                         button.addEventListener("click", function() {
-                            purchase(data, type)
+                            purchase(thisdata, type)
                         })
 
                         clone.hidden = false
