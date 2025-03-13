@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const version = "0.045_1 Alpha - Wii U (build 10)"
+const version = "0.045_1 Alpha - Wii U (build 11)"
 const fps = 30
 
 const items = {
@@ -370,7 +370,8 @@ function load() {
         }
     }
 
-    for (d of items.structures) {
+    for (d in items.structures) {
+        d = items.structures[d]
         if (!stats.Structures[d.Name]) {
             stats.Structures[d.Name] = {
                 Amount: 0,
@@ -409,7 +410,8 @@ function load() {
     }
 
     function astep() {
-        for (acv of items.achievements) {
+        for (acv in items.achievements) {
+            acv = items.achievements[acv]
             if (!stats.Achievements[acv.Name]) {
                 if (acv.Type == "Stat") {
                     for (req in acv.Requirements) {
