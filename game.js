@@ -34,7 +34,7 @@ var shopopen
 var menurf
 var coinmpos
 
-const gameversion = "0.045_1 Alpha - Wii U (build 14, debug)"
+const gameversion = "0.045_1 Alpha - Wii U (build 14b, debug)"
 const fps = 30
 
 const items = {
@@ -185,6 +185,10 @@ const items = {
         Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 }
     ]
 }
+for (i in items) {
+    console.log(i)
+}
+console.log(items.structures)
 const fancynames = { // Any string you want to look fancy
     CoinsPs: "Coins per sec.",
     CoinsPsMult: "Coins per sec. multiplier",
