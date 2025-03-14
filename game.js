@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_1 Alpha - Wii U (build 17d, debug)"
+const gameversion = "0.045_2 Alpha - Wii U (build 18)"
 const fps = 30
 
 const gameitems = {
@@ -489,7 +489,7 @@ function findfromiv(array, i, v) {
         y = array[x]
 
         if (y[i] == v) {
-            result = x
+            result = y
             break
         }
     }
@@ -531,28 +531,21 @@ function available(reqs) {
         }
     }
 
-    console.log("Is available")
-
     return true
 }
 
 function purchase(name, type) {
-    console.log("Attempt to purchase " + name)
-
     var data
     for (i in gameitems[type]) {
         const result = getitem(name, type)
 
         if (result) {
             data = result
-            console.log("Got data for " + name + " proceeding with purchase...")
             break
         }
     }
 
-    console.log(data)
     if (data && (stats.Coins >= data.Cost)) {
-        console.log("Sufficient funds")
         stats.Coins -= data.Cost
 
         if (type != "upgrades") {
@@ -611,8 +604,6 @@ function purchase(name, type) {
         
         refresh()
         shop(type, true)
-
-        console.log("Purchase of " + data.Name + " successful")
     }
 }
 
