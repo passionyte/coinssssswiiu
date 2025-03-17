@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_2 Alpha - Wii U (build 18)"
+const gameversion = "0.045_2 Alpha - Wii U (build 19)"
 const fps = 30
 
 const gameitems = {
@@ -693,6 +693,15 @@ function doStats() {
     }
 }
 
+function setSetting(nm, bool, what) {
+    if (bool) {
+        stats.Settings[nm] = (!stats.Settings[nm])
+    }
+    else {
+        stats.Settings[nm] = what
+    }
+}
+
 function doSettings() {
     const ui = document.getElementById("settings")
     ui.innerHTML = null
@@ -714,12 +723,13 @@ function doSettings() {
             const entry = document.getElementById("booldummy").cloneNode(true)
 
             const b = entry.children[0]
+            entry.Id = nm
             b.innerText = nm.toUpperCase() + " : " + bool(stats.Settings[nm])
             entry.style.display = "block"
             ui.appendChild(entry)
 
             function handler() {
-                stats.Settings[nm] = (!stats.Settings[nm])
+                setSetting(entry.Id, true)
                 doSettings()
                 if (shopopen) {
                     shop(shopopen, true)
@@ -731,6 +741,8 @@ function doSettings() {
         else {
             const mytype = typeof (set)
             const entry = document.getElementById("inputdummy").cloneNode(true)
+
+            entry.Id = nm
 
             const c = entry.children
             c[0].innerText = nm.toUpperCase() + " : "
@@ -744,7 +756,7 @@ function doSettings() {
                     input = Number(input)
 
                     if (!isNaN(input)) {
-                        stats.Settings[nm] = input
+                        setSetting(entry.Id, false, input)
                         doSettings()
                         if (shopopen) {
                             shop(shopopen, true)
