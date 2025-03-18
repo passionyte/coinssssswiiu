@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.045_2 Alpha - Wii U (build 19)"
+const gameversion = "0.046 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -219,6 +219,10 @@ const abbrs = { // Number abbreviations
     trillion: 1e12,
     billion: 1e9,
     million: 1e6
+}
+const changelog = {
+    "0.046 Alpha": "- Added changelog \n - Minor fixes to scaling issues until I become the opposite of a newbie at CSS",
+    "0.045_2 Alpha": "- This port now exists, yay \n - Minor bug fix."
 }
 
 // Functions
@@ -702,6 +706,31 @@ function setSetting(nm, bool, what) {
     }
 }
 
+function doChangelog() {
+    const ui = document.getElementById("changelog")
+    ui.innerHTML = null
+
+    for (vers in changelog) {
+        const log = changelog[vers]
+
+        const entry = document.getElementById("logdummy").cloneNode(true)
+
+        const c = entry.children
+
+        c[0].innerText = vers
+
+        if (vers == gameversion.replace(" - Wii U", "")) {
+            c[0].style.color = "rgb(0, 100, 0)"
+        }
+
+        c[2].innerText = log
+
+        entry.style.display = "block"
+
+        ui.appendChild(entry)
+    }
+}
+
 function doSettings() {
     const ui = document.getElementById("settings")
     ui.innerHTML = null
@@ -789,16 +818,19 @@ function menu(type) {
         menuopen = type
         ui.hidden = false
 
+        const hideacvs = (type != "stats")
+        aui.hidden = hideacvs
+        at.hidden = hideacvs
+
         if (type == "stats") {
-            aui.hidden = false
-            at.hidden = false
             doStats()
             menurf = setInterval(doStats, 2000)
         }
         else if (type == "settings") {
-            aui.hidden = true
-            at.hidden = true
             doSettings()
+        }
+        else if (type == "changelog") {
+            doChangelog()
         }
     }
     else {
@@ -873,6 +905,12 @@ function settingshandler() {
 }
 
 document.getElementById("settingsbutton").addEventListener("click", settingshandler)
+
+function changeloghandler() {
+    menu("changelog")
+}
+
+document.getElementById("changelogbutton").addEventListener("click", changeloghandler)
 
 // Hard coded crap
 

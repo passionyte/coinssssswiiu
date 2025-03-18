@@ -37,9 +37,10 @@
        </div>
        <div id="main3" class="menu" style="width: 25%; display: none; float: left; margin-left: 5%">
            <a style="height: 8%; font-size: 40px; display: block"><b>Menu</b></a>
-           <div id="top">
-               <button class="text" id="statsbutton" style="float: left">Stats</button>
-               <button class="text" id="settingsbutton" style="float: right">Settings</button>
+           <div id="top" style="text-align: center;">
+                <button class="text" id="statsbutton" style="float: left" >Stats</button>
+                <button class="text" id="changelogbutton" style="display: inline-block" >Changelog</button>
+                <button class="text" id="settingsbutton" style="float: right" >Settings</button>
            </div>
            <div id="menu" style="width: 100%; height: 100%; margin-top: 20%">
                <a id="menulabel" style="height: 10%; font-size: 20px; font-weight: bold"></a>
@@ -47,10 +48,14 @@
                    <a style="display: contents; font-weight: bold">Something : </a>
                    <a style="display: contents">0</a>
                </div>
-               <div id="acvdummy" class="stat">
+               <div id="acvdummy" class="stat" style="height: auto">
                     <a style="display: contents; font-weight: bold">Achievement</a> <br>
                     <a style="display: contents; font-style: italic; font-size: 12px">Good job!</a>
-               </div>
+                </div>
+                <div id="logdummy" class="stat" style="height: auto">
+                    <a style="display: contents; font-weight: bold">Alpha 1.0</a> <br>
+                    <a style="display: contents; font-size: 12px">Insert stuffs here</a>
+                </div>
                <div id="buttondummy" class="stat">
                    <button style="font-weight: bold">Click me</button>
                </div>
@@ -66,6 +71,7 @@
                <a id="acvtitle" style="height: 10%; font-size: 20px; font-weight: bold" hidden>ACHIEVEMENTS</a>
                <div id="achievements" style="overflow-y: scroll; max-height: 20%" class="imenu" hidden></div>
                <div id="settings" class="imenu" hidden></div>
+               <div id="changelog" class="imenu" hidden></div>
            </div>
        </div>
        <div id="main2" class="menu" style="width: 30%; display: none; float: left; margin-left: 5%">
