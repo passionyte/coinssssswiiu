@@ -375,7 +375,7 @@ function effect(type, args) {
 
 function load() {
     // Data
-    const data = localStorage.getItem("Data")
+    const data = localStorage.getItem("WiiUData")
 
     if (data) {
         const savedata = JSON.parse(data)
@@ -475,7 +475,7 @@ function load() {
 
 function save() {
     if (stats.Coins > 0 && loaded && !savecd) {
-        localStorage.setItem("Data", JSON.stringify(stats))
+        localStorage.setItem("WiiUData", JSON.stringify(stats))
         savecd = true
 
         function a() {
