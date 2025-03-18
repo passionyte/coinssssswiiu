@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.048 Alpha - Wii U"
+const gameversion = "0.049 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -211,6 +211,9 @@ const gamesettings = {
     savegame: function () {
         save()
     },
+    gotomain: function () {
+        document.location.replace("https://passionyte.github.io/coinsssss")
+    },
 
     // Boolean types
     autosaving: true,
@@ -229,6 +232,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const changelog = {
+    "0.049 Alpha": "- Added redirect button between versions",
     "0.048 Alpha": "- More upgrades and achievements",
     "0.046 Alpha": "- Added changelog \n - Minor fixes to scaling issues until I become the opposite of a newbie at CSS",
     "0.045_2 Alpha": "- This port now exists, yay \n - Minor bug fix."
