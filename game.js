@@ -175,6 +175,7 @@ const gameitems = {
         TrueEconomist = { Name: "True Economist", Description: "Now do it with currencies ;) [100 Traders]", Type: "Structures", Requirements: { Trader: 100 } },
         ExpertEmployer = { Name: "Expert Employer", Description: "You could rival Wal-Mart. Maybe. Regardless, you're better than K-mart. [100 Businesses]", Type: "Structures", Requirements: { Business: 100 } },
         ProductionLineOverlord = { Name: "Production Line Overlord", Description: "Now do it with currencies ;) [100 Factories]", Type: "Structures", Requirements: { Factory: 100 } },
+                BilliardsEnthusiast = { Name: "Billiards Enthusiast", Description: "That's a lot of insecurity... [100 EightBalls]", Type: "Structures", Requirements: { EightBall: 100} },
         CoinsBetterThanDoge = { Name: "Coinsssss > Doge", Description: "You showed that succubus of a Dogecoin promoter who is boss. [100 Currencies]", Type: "Structures", Requirements: { Currency: 100 } },
         CoinMesa = { Name: "Coin Mesa", Description: "Welcome to the Coin Mesa ResearchFacility. [100 Research Facilities]", Type: "Structures", Requirements: { ResearchFacility: 100 } },
         IsThereAnyMatterLeft = { Name: "Is there any matter left?", Description: "No, seriously. [100 MatterRefiners]", Type: "Structures", Requirements: { MatterRefiner: 100 } },
