@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.046 Alpha - Wii U"
+const gameversion = "0.048 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -144,7 +144,11 @@ const gameitems = {
         UnobtainiumFortune = { Name: "Unobtainium Fortune", Cost: 6000000000000, CoinsPsMult: 3.5, Description: "A mysterious 'unobtainable' mineral from a different period in time and space... Gives 350% production multiplier.", Requirements: { Stats: { CoinsPsMult: 7.5 } } },
         MeteoriteMouse = { Name: "Meteorite Mouse", Cost: 16500000000, StructName: "Planet", OtherBoosts: { Clicker: 12 }, Description: "Make the most of your Planets by making Cursors more competent! Planets are twice as efficient, Cursors are 12 times as efficient!", Requirements: { Structures: { Cursor: 150, Planet: 25 } } },
         OverExploration = { Name: "Over-Exploration", Cost: 40000000000, StructName: "Planet", OtherBoosts: { ResearchFacility: 2 }, Description: "Discover absolutely everything on your Planets with advanced nerds and astronauts. Planets and Research Facilities are twice as efficient!", Requirements: { Structures: { Planet: 50, ResearchFacility: 100 } } },
-        RubyMouse = { Name: "Ruby Mouse", Cost: 20000000000, StructName: "Clicker", Description: "Told you Ruby was better than Bloodstone. Clickers are twice as efficient!", Requirements: { Structures: { Clicker: 300 } } }
+        RubyMouse = { Name: "Ruby Mouse", Cost: 20000000000, StructName: "Clicker", Description: "Told you Ruby was better than Bloodstone. Clickers are twice as efficient!", Requirements: { Structures: { Clicker: 300 } } },
+        Lunar = { Name: "Lunar Mechanics", Cost: 1660000000, StructName: "Factory", Description: "Pure lunar space power was found to be more efficient than using Uber powered mechanics. Your factories produce coins at the speed of light. Factories are twice as efficient!", Requirements: { Structures: { Factory: 200 } } },
+        InfiniteLuck = { Name: "Infinite Luck", Cost: 9999999999, StructName: "EightBall", Description: "Well technically your luck is finite, but I like to keep things 'creative' in this game. EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 200 } } },
+        Globalization = { Name: "Globalization", Cost: 17000000000, StructName: "Currency", Description: "Fun fact: 102% more people hate you now. Currencies are twice as efficient!", Requirements: { Structures: { Currency: 200 } } },
+        Neopolitan = { Name: "Neopolitan", Cost: 7900000000000, StructName: "TheMatrix", Description: "An absurdly expensive joke. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 200 } } },
     ],
     achievements: [
         // TotalCoins
@@ -155,6 +159,7 @@ const gameitems = {
         Billionaire = { Name: "Billionaire", Description: "Now that is kinda crazy! You've really made it!", Type: "Stat", Requirements: { TotalCoins: 1e9 } },
         Trillionaire = { Name: "Trillionaire", Description: "You should stop playing now...", Type: "Stat", Requirements: { TotalCoins: 1e12 } },
         Quadrillionaire = { Name: "Quadrillionaire", Description: "Absolute insanity.", Type: "Stat", Requirements: { TotalCoins: 1e15 } },
+        Quintillionaire = { Name: "Quintillionaire", Description: "When this was added it wasn't even possible to reach...", Type: "Stat", Requirements: { TotalCoins: 1e18 } },
         // CoinsPs
         AMintASecond = { Name: "A Mint A Second", Description: "Every second: [Insert coin sound effect here] [1 cps]", Type: "Stat", Requirements: { CoinsPs: 1 } },
         CoinFlow = { Name: "Coin Flow", Description: "Sweet!!! [10 cps]", Type: "Stat", Requirements: { CoinsPs: 10 } },
@@ -176,11 +181,13 @@ const gameitems = {
         CoinGalaxies = { Name: "Coin Galaxies", Description: "You shaped this universe in your vision. [100 Planets]", Type: "Structures", Requirements: { Planet: 100 } },
         AgentCoin = { Name: "Agent Coin", Description: "That's you! [100 TheMatrixes]", Type: "Structures", Requirements: { TheMatrix: 100 } },
         ExtinctAtoms = { Name: "ExtinctAtoms", Description: "...You monster. [100 Atomizers]", Type: "Structures", Requirements: { Atomizer: 100 } },
+        Clickageddon = { Name: "Clickageddon", Description: "Enough clicks to end the world. [200 Clickers]", Type: "Structures", Requirements: { Clicker: 200 } },
         // SumStructs
         Builder = { Name: "Builder", Description: "Keep going... [100 Structures]", Type: "SumStructs", Requirement: 100 },
         Entrepreneur = { Name: "Entrepreneur", Description: "That's a lot to keep track of... [250 Structures]", Type: "SumStructs", Requirement: 250 },
         YourOwnCountry = { Name: "Your Own Country", Description: "Wow! You're a proud Queen or King of a whole lot! [500 Structures]", Type: "SumStructs", Requirement: 500 },
         YourOwnGalaxy = { Name: "Your Own Galaxy", Description: "Honorable coin Queen or King of a whole Galaxy of structures! [1K Structures]", Type: "SumStructs", Requirement: 1000 },
+        DontYouOwnEverything = { Name: "Don't You Own Everything?", Description: "Sure sounds like it. [2.5K Structures]", Type: "SumStructs", Requirement: 2500 },
         // SumUpgrades
         Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 }
     ]
@@ -215,12 +222,14 @@ const gamesettings = {
     decimals: 2
 }
 const abbrs = { // Number abbreviations
+    quintillion: 1e18,
     quadrillion: 1e15,
     trillion: 1e12,
     billion: 1e9,
     million: 1e6
 }
 const changelog = {
+    "0.048 Alpha": "- More upgrades and achievements",
     "0.046 Alpha": "- Added changelog \n - Minor fixes to scaling issues until I become the opposite of a newbie at CSS",
     "0.045_2 Alpha": "- This port now exists, yay \n - Minor bug fix."
 }
