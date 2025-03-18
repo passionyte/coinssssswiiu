@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.049 Alpha - Wii U"
+const gameversion = "0.05 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -149,6 +149,8 @@ const gameitems = {
         InfiniteLuck = { Name: "Infinite Luck", Cost: 9999999999, StructName: "EightBall", Description: "Well technically your luck is finite, but I like to keep things 'creative' in this game. EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 200 } } },
         Globalization = { Name: "Globalization", Cost: 17000000000, StructName: "Currency", Description: "Fun fact: 102% more people hate you now. Currencies are twice as efficient!", Requirements: { Structures: { Currency: 200 } } },
         Neopolitan = { Name: "Neopolitan", Cost: 7900000000000, StructName: "TheMatrix", Description: "An absurdly expensive joke. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 200 } } },
+        Decaclick = { Name: "Decaclick", Cost: 365000000000, CoinsPcPs: 0.08, Description: "Finally. Clicking earns 8% of your coins per second!", Requirements: { Stats: { CoinsPcPs: 0.17 } } },
+        BeyondTheLimits = { Name: "Beyond The Limits", Cost: 128000000000, CoinsPc: 32, Multiply: true, Description: "Yeah, that's indeed beyond the limits of the 32 bit... Base coins per click is multiplied by 32.", Requirements: { Stats: { CoinsPc: 32735232 } } },
     ],
     achievements: [
         // TotalCoins
@@ -233,6 +235,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const changelog = {
+    "0.05 Alpha": "- 2 new CPC upgrades to help bridge the progression gap... need more...",
     "0.049 Alpha": "- Added redirect button between versions",
     "0.048 Alpha": "- More upgrades and achievements",
     "0.046 Alpha": "- Added changelog \n - Minor fixes to scaling issues until I become the opposite of a newbie at CSS",
