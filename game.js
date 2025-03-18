@@ -822,6 +822,9 @@ function menu(type) {
         aui.hidden = hideacvs
         at.hidden = hideacvs
 
+        const hidewiiunote = (type != "changelog")
+        document.getElementById("wiiunote").hidden = hidewiiunote
+
         if (type == "stats") {
             doStats()
             menurf = setInterval(doStats, 2000)
@@ -838,6 +841,7 @@ function menu(type) {
         at.hidden = true
         document.getElementById("menulabel").innerText = ""
         ui.hidden = true
+        document.getElementById("wiiunote").hidden = true
 
         if (menurf) {
             clearInterval(menurf)
