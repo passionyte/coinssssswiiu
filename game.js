@@ -491,7 +491,6 @@ function load() {
                             const main = localStorage.getItem("Data") 
 
                             if (main && main.Achievements) {
-                                console.log(main)
                                 main.Achievements[acv.Name] = true
 
                                 localStorage.setItem("Data", JSON.stringify(main))
