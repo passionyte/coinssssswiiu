@@ -484,7 +484,7 @@ function load() {
                 }
                 else { // Special achievement unlocks
                     if (acv.Name == "Wii U") {
-                        if (window.wiiu) {
+                        if (window.wiiu || true) {
                             award(acv.Name)
                             
                             // Main save file if exists
