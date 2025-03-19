@@ -247,6 +247,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const gamechangelog = {
+    "0.052_1 Alpha": "- The save file won't exist on Wii U consoles so forget that last note",
     "0.052 Alpha": "- Added Wii U achievement for people who actually play this on a Wii U. It is also given to your primary save file if it exists.",
     "0.05 Alpha": "- 2 new CPC upgrades to help bridge the progression gap... need more...",
     "0.049 Alpha": "- Added redirect button between versions",
@@ -484,19 +485,8 @@ function load() {
                 }
                 else { // Special achievement unlocks
                     if (acv.Name == "Wii U") {
-                        if (window.wiiu || true) {
+                        if (window.wiiu) {
                             award(acv.Name)
-                            
-                            // Main save file if exists
-                            const main = localStorage.getItem("Data") 
-
-                            console.log(main)
-
-                            if (main && main.Achievements) {
-                                main.Achievements[acv.Name] = true
-
-                                localStorage.setItem("Data", JSON.stringify(main))
-                            }
                         }
                     }
                 }
