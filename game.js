@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.05 Alpha - Wii U"
+const gameversion = "0.052 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -192,7 +192,9 @@ const gameitems = {
         YourOwnGalaxy = { Name: "Your Own Galaxy", Description: "Honorable coin Queen or King of a whole Galaxy of structures! [1K Structures]", Type: "SumStructs", Requirement: 1000 },
         DontYouOwnEverything = { Name: "Don't You Own Everything?", Description: "Sure sounds like it. [2.5K Structures]", Type: "SumStructs", Requirement: 2500 },
         // SumUpgrades
-        Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 }
+        Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 },
+        // Special
+        WiiU = { Name: "Wii U", Description: "You're officially cooler than all other players. [Play on Wii U]", Type: "Special" }
     ]
 }
 const fancynames = { // Any string you want to look fancy
@@ -245,6 +247,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const gamechangelog = {
+    "0.052 Alpha": "- Added Wii U achievement for people who actually play this on a Wii U. It is also given to your primary save file if it exists.",
     "0.05 Alpha": "- 2 new CPC upgrades to help bridge the progression gap... need more...",
     "0.049 Alpha": "- Added redirect button between versions",
     "0.048 Alpha": "- More upgrades and achievements",
@@ -477,6 +480,23 @@ function load() {
 
                     if (len >= acv.Requirement) {
                         award(acv.Name)
+                    }
+                }
+                else { // Special achievement unlocks
+                    if (acv.Name == "Wii U") {
+                        if (window.wiiu) {
+                            award(acv.Name)
+                            
+                            // Main save file if exists
+                            const main = localStorage.getItem("Data") 
+
+                            if (main && main.Achievements) {
+                                console.log(main)
+                                main.Achievements[acv.Name] = true
+
+                                localStorage.setItem("Data", JSON.stringify(main))
+                            }
+                        }
                     }
                 }
             }
