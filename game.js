@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.052_1 Alpha - Wii U"
+const gameversion = "0.055 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -44,13 +44,13 @@ const gameitems = {
         Trader = { Name: "Trader", Cost: 800, CoinsPs: 4, Description: "Hire a 'Professional' coin trader to make more coins." },
         Business = { Name: "Business", Cost: 2000, CoinsPs: 20, Description: "Start a business to exchange goods and services for more coins." },
         Factory = { Name: "Factory", Cost: 14000, CoinsPs: 128, Description: "Why not build a Factory that produces coins?" },
-        EightBall = { Name: "EightBall", Cost: 88000, CoinsPs: 512, Description: "What's the point of being conventional? Start bulk buying EightBalls for more coin wishes." },
+        EightBall = { Name: "EightBall", WiiUName: "8-Ball", Cost: 88000, CoinsPs: 512, Description: "What's the point of being conventional? Start bulk buying 8-Balls for more coin wishes." },
         Currency = { Name: "Currency", Cost: 500000, CoinsPs: 2800, Description: "Now you must mean serious business. Convince people to start paying solely in coins." },
-        Research = { Name: "ResearchFacility", Cost: 3200000, CoinsPs: 12000, Description: "Research facilities which prioritize finding new ways to make coins." },
-        MatterRefiner = { Name: "MatterRefiner", Cost: 48000000, CoinsPs: 50000, Description: "Developed by your research facilities, you can now refine matter to the point where it turns into coins." },
+        Research = { Name: "ResearchFacility", WiiUName: "Research Facility", Cost: 3200000, CoinsPs: 12000, Description: "Research facilities which prioritize finding new ways to make coins." },
+        MatterRefiner = { Name: "MatterRefiner", WiiUName: "Matter Refiner", Cost: 48000000, CoinsPs: 50000, Description: "Developed by your research facilities, you can now refine matter to the point where it turns into coins." },
         Planet = { Name: "Planet", Cost: 256000000, CoinsPs: 200000, Description: "Why rely on mere objects when you can just create new planets filled to the brim with coins?" },
-        Matrix = { Name: "TheMatrix", Cost: 6000000000, CoinsPs: 1999000, Description: "Didn't see this coming, did you? Now choose a coin... red or blue..." },
-        Atomizer = { Name: "Atomizer", Cost: 300000000000, CoinsPs: 44000000, Description: "A massive advancement over the MatterRefiners, Atomizers can bend literally anything, Matrix or not, into millions of coins." }
+        Matrix = { Name: "TheMatrix", WiiUName: "The Matrix", Cost: 6000000000, CoinsPs: 1999000, Description: "Didn't see this coming, did you? Now choose a coin... red or blue..." },
+        Atomizer = { Name: "Atomizer", Cost: 300000000000, CoinsPs: 44000000, Description: "A massive advancement over the Matter Refiners, Atomizers can bend literally anything, Matrix or not, into millions of coins." }
     ],
     upgrades: [
         DoubleClick = { Name: "Double Click", Cost: 100, CoinsPc: 1, Description: "Doubles your coins per click!" },
@@ -77,8 +77,8 @@ const gameitems = {
         SuperFullTime = { Name: "Super Full-Time", Cost: 400000, StructName: "Business", Description: "So workers thought full-time was a lot? You say: Nah. Businesses are twice as efficient!", Requirements: { Structures: { Business: 25 } } },
         Nuclear = { Name: "Nuclear Mechanics", Cost: 1000000, StructName: "Factory", Description: "Radioactive. Factories are twice as efficient!", Requirements: { Structures: { Factory: 25 } } },
         SilverFortune = { Name: "Silver Fortune", Cost: 1000000, CoinsPsMult: 0.15, Description: "'Second is the best' Gives 15% production multiplier.", Requirements: { Stats: { CoinsPsMult: 1.1 } } },
-        EightSquared = { Name: "8^2", Cost: 900000, StructName: "EightBall", Description: "8 squared is 64! EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 1 } } },
-        EightCubed = { Name: "8^3", Cost: 4000000, StructName: "EightBall", Description: "8 cubed is 512! EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 10 } } },
+        EightSquared = { Name: "8^2", Cost: 900000, StructName: "EightBall", Description: "8 squared is 64! 8-Balls are twice as efficient!", Requirements: { Structures: { EightBall: 1 } } },
+        EightCubed = { Name: "8^3", Cost: 4000000, StructName: "EightBall", Description: "8 cubed is 512! 8-Balls are twice as efficient!", Requirements: { Structures: { EightBall: 10 } } },
         Investors = { Name: "Investors", Cost: 2000000, StructName: "Currency", Description: "Get top of the line investors to well.. endorse coins! Currencies are twice as efficient!", Requirements: { Structures: { Currency: 1 } } },
         Supercharged = { Name: "Supercharged", Cost: 6000000, StructName: "ResearchFacility", Description: "Supercharged SCIENCE! Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 1 } } },
         GoldFortune = { Name: "Gold Fortune", Cost: 24000000, CoinsPsMult: 0.25, Description: "Well we all SHIIIIIINE onnnnn! Gives 25% production multiplier.", Requirements: { Stats: { CoinsPsMult: 1.25 } } },
@@ -91,28 +91,28 @@ const gameitems = {
         SuperUnion = { Name: "Super Union", Cost: 9900000, StructName: "Business", Description: "A union that is pro-working Super Full-Time hours! Businesses are twice as efficient!", Requirements: { Structures: { Business: 50 } } },
         Atomic = { Name: "Atomic Mechanics", Cost: 26000000, StructName: "Factory", Description: "ATOMIC. Factories are twice as efficient!", Requirements: { Structures: { Factory: 50 } } },
         YeahScience = { Name: "YEAH SCIENCE!", Cost: 52000000, StructName: "ResearchFacility", Description: "Just go berzerk with your science. Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 10 } } },
-        Optimization = { Name: "Optimization", Cost: 168000000, StructName: "MatterRefiner", Description: "Make some absurdly expensive optimizations to your MatterRefiners for 'maximum' coin output. MatterRefiners are twice as efficient!", Requirements: { Structures: { MatterRefiner: 1 } } },
-        AdvancedPrograms = { Name: "Advanced Programs", Cost: 21400000000, StructName: "TheMatrix", Description: "Get your tech gurus from the Research Facilities and in TheMatrix to design better programs for COINS... And Only COINS... TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 1 } } },
+        Optimization = { Name: "Optimization", Cost: 168000000, StructName: "MatterRefiner", Description: "Make some absurdly expensive optimizations to your Matter Refiners for 'maximum' coin output. Matter Refiners are twice as efficient!", Requirements: { Structures: { MatterRefiner: 1 } } },
+        AdvancedPrograms = { Name: "Advanced Programs", Cost: 21400000000, StructName: "TheMatrix", Description: "Get your tech gurus from the Research Facilities and in The Matrix to design better programs for COINS... And Only COINS... The Matrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 1 } } },
         UniversalDevotion = { Name: "Universal Devotion", Cost: 192000000, StructName: "Currency", Description: "Ensure your coin currencies have become universally adopted. Currencies are twice as efficient!", Requirements: { Structures: { Currency: 25 } } },
-        WhatComesAfterEightCubed = { Name: "What comes after 8^3", Cost: 44000000, StructName: "EightBall", Description: "8^4 is 4096! EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 25 } } },
-        CoolerNumber = { Name: "Cooler Number", Cost: 204800000, StructName: "EightBall", Description: "8^5 is 32768! Cool, right? I don't know what this has to do with EightBalls. Just don't sink my cue. EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 50 } } },
+        WhatComesAfterEightCubed = { Name: "What comes after 8^3", Cost: 44000000, StructName: "EightBall", Description: "8^4 is 4096! 8-Balls are twice as efficient!", Requirements: { Structures: { EightBall: 25 } } },
+        CoolerNumber = { Name: "Cooler Number", Cost: 204800000, StructName: "EightBall", Description: "8^5 is 32768! Cool, right? I don't know what this has to do with 8-Balls. Just don't sink my cue. 8-Balls are twice as efficient!", Requirements: { Structures: { EightBall: 50 } } },
         MiningCompany = { Name: "Mining Company", Cost: 240000, StructName: "Business", OtherBoosts: { Miner: 4 }, Description: "Starting a mining company kills two birds with one stone. Businesses are twice as efficient, Miners are 4 times as efficient!", Requirements: { Structures: { Miner: 25, Business: 10 } } },
-        Condensers = { Name: "Condensers", Cost: 1048000000, StructName: "MatterRefiner", Description: "Condense management of refinement for more streamlined coin production. MatterRefiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 10 } } },
+        Condensers = { Name: "Condensers", Cost: 1048000000, StructName: "MatterRefiner", Description: "Condense management of refinement for more streamlined coin production. Matter Refiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 10 } } },
         TitaniumMouse = { Name: "Titanium Mouse", Cost: 4800000, StructName: "Clicker", Description: "A material perfect for endless rapid clicking. Clickers are twice as efficient.", Requirements: { Structures: { Clicker: 100 } } },
         BloodstonePickaxe = { Name: "Bloodstone Pickaxe", Cost: 2100000, StructName: "Miner", Description: "Upgrade pickaxes from Diamond to Bloodstone, a very very hard material harvested from the depths of the underworld beating out the power of even diamonds. Miners are twice as efficient.", Requirements: { Structures: { Miner: 100 } } },
-        TheTruth = { Name: "The Truth", Cost: 92000000000, StructName: "TheMatrix", Description: "All I can offer is the truth about coins. Nothing more. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 10 } } },
+        TheTruth = { Name: "The Truth", Cost: 92000000000, StructName: "TheMatrix", Description: "All I can offer is the truth about coins. Nothing more. The Matrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 10 } } },
         HandsOnHeadsOn = { Name: "Hands on, Heads on.", Cost: 240000000, StructName: "ResearchFacility", Description: "Name explains it compvarely. Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 25 } } },
         Superscience = { Name: "Superscience", Cost: 1600000000, StructName: "ResearchFacility", Description: "Extremely fast science. No need to distract others with YEAH SCIENCE! Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 50 } } },
-        LearningProgress = { Name: "Learning Progress", Cost: 1200000000, StructName: "MatterRefiner", OtherBoosts: { ResearchFacility: 2 }, Description: "You know what they say, practice makes perfect. Research Facilities and MatterRefiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 5, ResearchFacility: 10 } } },
-        Industrialization = { Name: "Industrialization", Cost: 2900000000, StructName: "MatterRefiner", OtherBoosts: { Factory: 8 }, Description: "Incorporate MatterRefiners into Factories. MatterRefiners are twice as efficient, Factories are 8 times as efficient!", Requirements: { Structures: { MatterRefiner: 10, Factory: 50 } } },
+        LearningProgress = { Name: "Learning Progress", Cost: 1200000000, StructName: "MatterRefiner", OtherBoosts: { ResearchFacility: 2 }, Description: "You know what they say, practice makes perfect. Research Facilities and Matter Refiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 5, ResearchFacility: 10 } } },
+        Industrialization = { Name: "Industrialization", Cost: 2900000000, StructName: "MatterRefiner", OtherBoosts: { Factory: 8 }, Description: "Incorporate Matter Refiners into Factories. MatterRefiners are twice as efficient, Factories are 8 times as efficient!", Requirements: { Structures: { MatterRefiner: 10, Factory: 50 } } },
         DevilsClick = { Name: "Devil's Click", Cost: 6666666, CoinsPc: 666, Multiply: true, Description: "The pure opposite of God's click. Base coins per click is multiplied by 666.", Requirements: { Stats: { CoinsPc: 96 } } },
         GodsClick = { Name: "God's Click", Cost: 21000000, CoinsPcPs: 0.05, Description: "Now this, this is holy. And also expensive. Clicking earns 5% of your coins per second!", Requirements: { Stats: { CoinsPcPs: 0.05 } } },
         PureGenius = { Name: "Pure Genius", Cost: 8000000000, StructName: "ResearchFacility", Description: "Extremely smart science. Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 100 } } },
         KeepingBusy = { Name: "Keeping Busy", Cost: 81000000, StructName: "Business", Description: "Just always be busy... Must be robot workers. Businesses are twice as efficient!", Requirements: { Structures: { Business: 100 } } },
         Uber = { Name: "Uber Mechanics", Cost: 200000000, StructName: "Factory", Description: "UBER. Factories are twice as efficient!", Requirements: { Structures: { Factory: 100 } } },
-        BigBang = { Name: "The Big Bang", Cost: 10000000000, StructName: "MatterRefiner", Description: "Recreating the big bang to produce and refine universes for coins is GENIUS! MatterRefiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 25 } } },
-        Blackholes = { Name: "Blackholes", Cost: 39600000000, StructName: "MatterRefiner", Description: "Pure bliss. File not found. MatterRefiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 50 } } },
-        Superball = { Name: "Superball", Cost: 8888888888, StructName: "EightBall", StructMult: 8, Description: "EIGHT! BOING! BOING! BOING! BOING! BOING! BOING! BOING! BOING! EightBalls are 8 times as efficient!", Requirements: { Structures: { EightBall: 100 } } },
+        BigBang = { Name: "The Big Bang", Cost: 10000000000, StructName: "MatterRefiner", Description: "Recreating the big bang to produce and refine universes for coins is GENIUS! Matter Refiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 25 } } },
+        Blackholes = { Name: "Blackholes", Cost: 39600000000, StructName: "MatterRefiner", Description: "Pure bliss. File not found. Matter Refiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 50 } } },
+        Superball = { Name: "Superball", Cost: 8888888888, StructName: "EightBall", StructMult: 8, Description: "EIGHT! BOING! BOING! BOING! BOING! BOING! BOING! BOING! BOING! 8-Balls are 8 times as efficient!", Requirements: { Structures: { EightBall: 100 } } },
         BloodstoneFortune = { Name: "Bloodstone Fortune", Cost: 96666666666, CoinsPsMult: 2, Description: "Well, wouldn't ruby be better? Whatever. Gives 200% production multiplier.", Requirements: { Stats: { CoinsPsMult: 3 } } },
         LackOfIdeas = { Name: "Lack of Ideas", Cost: 781000000, StructName: "Currency", OtherBoosts: { Trader: 2 }, Description: "Yeah, you heard me. But you can turn a lack of ideas into an idea! Profit!!! Traders and Currencies are twice as efficient!", Requirements: { Structures: { Currency: 50 } } },
         BrainAge = { Name: "Brain Age", Cost: 95000000, StructName: "Trader", Description: "Training your brain every day will give you better scamming skills. Traders are twice as efficient!", Requirements: { Structures: { Trader: 100 } } },
@@ -120,14 +120,14 @@ const gameitems = {
         Ultrascience = { Name: "Ultrascience", Cost: 7500000000, StructName: "ResearchFacility", Description: "Ultrascience > Superscience. Research Facilities are twice as efficient!", Requirements: { Structures: { ResearchFacility: 200 } } },
         AdvancedAdapter = { Name: "Advanced Adapter", Cost: 133700000, StructName: "ResearchFacility", OtherBoosts: { Clicker: 1337 }, Description: "This extremely advanced adapter makes Clickers competent! Research Facilities are twice as efficient, Clickers are 1337 times as efficient!", Requirements: { Structures: { ResearchFacility: 5, Clicker: 100 } } },
         MoonstoneMouse = { Name: "Moonstone Mouse", Cost: 55000000, StructName: "Clicker", Description: "I'm gonna steal the MOOOOOON...stone. Clickers are twice as efficient!", Requirements: { Structures: { Clicker: 200 } } },
-        AntimatterSupport = { Name: "Antimatter Support", Cost: 100000000000, StructName: "MatterRefiner", Description: "Your Research Facilities can truly accomplish anything huh? MatterRefiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 100 } } },
+        AntimatterSupport = { Name: "Antimatter Support", Cost: 100000000000, StructName: "MatterRefiner", Description: "Your Research Facilities can truly accomplish anything huh? Matter Refiners are twice as efficient.", Requirements: { Structures: { MatterRefiner: 100 } } },
         PalladiumPickaxe = { Name: "Palladium Pickaxe", Cost: 190000000, StructName: "Miner", Description: "Upgrade pickaxes from Bloodstone to Palladium, an extremely rare and absurdly expensive mineral forged from fragments of meteors and the Earth's core. Miners are twice as efficient.", Requirements: { Structures: { Miner: 200 } } },
         ArtificialIntelligence = { Name: "A.I.", Cost: 820000000, StructName: "Trader", Description: "What's the point of relying on stupid human brains for scamming? Traders are twice as efficient!", Requirements: { Structures: { Trader: 200 } } },
         CoinLanding = { Name: "Coin Landing", Cost: 600000000, StructName: "Planet", Description: "Fake landing on your own planet! Planets are twice as efficient!", Requirements: { Structures: { Planet: 1 } } },
         TotalExcavation = { Name: "Total Excavation", Cost: 3650000000, StructName: "Planet", Description: "'We care about nature', they say as they rip apart planets... Planets are twice as efficient!", Requirements: { Structures: { Planet: 10 } } },
         CoolDiscoveries = { Name: "Cool Discoveries", Cost: 9400000000, StructName: "Planet", Description: "COOOOOL!!!!! Planets are twice as efficient!", Requirements: { Structures: { Planet: 25 } } },
         PlanetaryMutations = { Name: "Planetary Mutations", Cost: 20000000000, StructName: "Planet", Description: "Two planets mutated into one?! Well this is weird! Planets are twice as efficient!", Requirements: { Structures: { Planet: 50 } } },
-        RefiningTheUnknown = { Name: "Refining The Unknown", Cost: 25000000000, StructName: "Planet", OtherBoosts: { MatterRefiner: 2 }, Description: "Great idea to refine things you haven't even fully evaluated yet... Planets and MatterRefiners are twice as efficient!", Requirements: { Structures: { Planet: 10, ResearchFacility: 25 } } },
+        RefiningTheUnknown = { Name: "Refining The Unknown", Cost: 25000000000, StructName: "Planet", OtherBoosts: { MatterRefiner: 2 }, Description: "Great idea to refine things you haven't even fully evaluated yet... Planets and Matter Refiners are twice as efficient!", Requirements: { Structures: { Planet: 10, ResearchFacility: 25 } } },
         MEGAPlanets = { Name: "MEGA Planets", Cost: 64000000000, StructName: "Planet", Description: "MEGA Planets for a MEGA price! Planets are twice as efficient!", Requirements: { Structures: { Planet: 100 } } },
         PalladiumFortune = { Name: "Palladium Fortune", Cost: 562000000000, CoinsPsMult: 2.5, Description: "Can we get much higher, higher... Gives 250% production multiplier.", Requirements: { Stats: { CoinsPsMult: 5 } } },
         UnstableEconomy = { Name: "Unstable Economy", Cost: 500000000, StructName: "Business", OtherBoosts: { Currency: 2, Trader: 2 }, Description: "Name explains it in whole... Businesses, Traders and Currencies are twice as efficient!", Requirements: { Structures: { Business: 200, Trader: 1, Currency: 1 } } },
@@ -135,22 +135,24 @@ const gameitems = {
         JoiningTeams = { Name: "Joining Teams", Cost: 330000000, StructName: "Business", StructMult: 16, OtherBoosts: { ResearchFacility: 2 }, Description: "Joining your Research Facilities and Businesses under the same umbrella will likely help massively for collaboration! Businesses are 16 times as efficient, Research Facilities are twice as efficient!", Requirements: { Structures: { Business: 100, ResearchFacility: 25 } } },
         MillionDollarClick = { Name: "Million Dollar Click", Cost: 250000000, CoinsPc: 16, Multiply: true, Description: "You're a millionaire! You already were. Base coins per click is multiplied by 16.", Requirements: { Stats: { CoinsPc: 63936 } } },
         Ultraclick = { Name: "Ultraclick", Cost: 35143748521, CoinsPcPs: 0.07, Description: "It's like the mouse variant of the Ultrascience upgrade. Clicking earns 7% of your coins per second!", Requirements: { Stats: { CoinsPcPs: 0.1 } } },
-        ImaginationIsReality = { Name: "Imagination Is Reality", Cost: 1000000000000, StructName: "TheMatrix", Description: "TheMatrix makes anything seem like reality. Even an absurd amount of coins. Anything you wish. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 50 } } },
-        EternalCoins = { Name: "Eternal Coins", Cost: 21300000000000, StructName: "TheMatrix", Description: "TheMatrix makes anything eternal. Even your prized coins, just for an ungodly cost. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 100 } } },
+        ImaginationIsReality = { Name: "Imagination Is Reality", Cost: 1000000000000, StructName: "TheMatrix", Description: "TheMatrix makes anything seem like reality. Even an absurd amount of coins. Anything you wish. The Matrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 50 } } },
+        EternalCoins = { Name: "Eternal Coins", Cost: 21300000000000, StructName: "TheMatrix", Description: "TheMatrix makes anything eternal. Even your prized coins, just for an ungodly cost. The Matrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 100 } } },
         MaxedOutCoins = { Name: "Maxed Out Coins", Cost: 2147483648, CoinsPc: 32, Multiply: true, Description: "The cost is as much as the 32 bit limit! Base coins per click is multiplied by 32.", Requirements: { Stats: { CoinsPc: 1022976 } } },
         AtomicImplementation = { Name: "Atomic Implementation", Cost: 1600000000000, StructName: "Atomizer", Description: "You're telling me you have found the solution to turning atoms into coins but you are still using Nuclear mechanics??? Come on now... Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 1 } } },
         PureDuplication = { Name: "Pure Duplication", Cost: 14000000000000, StructName: "Atomizer", Description: "Pure optimization allows for pure duplication. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 10 } } },
-        UberImplementation = { Name: "Uber Implementation", Cost: 40000000000000, StructName: "Atomizer", Description: "Yeah, Atomic power isn't the best. Get with the times. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 25 } } },
+        UberImplementation = { Name: "Uber Implementation", Cost: 40000000000000, StructName: "Atomizer", Description: "Yeah, Atomic power isn't the best. Get with the times. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 100 } } },
         UnobtainiumFortune = { Name: "Unobtainium Fortune", Cost: 6000000000000, CoinsPsMult: 3.5, Description: "A mysterious 'unobtainable' mineral from a different period in time and space... Gives 350% production multiplier.", Requirements: { Stats: { CoinsPsMult: 7.5 } } },
         MeteoriteMouse = { Name: "Meteorite Mouse", Cost: 16500000000, StructName: "Planet", OtherBoosts: { Clicker: 12 }, Description: "Make the most of your Planets by making Cursors more competent! Planets are twice as efficient, Cursors are 12 times as efficient!", Requirements: { Structures: { Cursor: 150, Planet: 25 } } },
         OverExploration = { Name: "Over-Exploration", Cost: 40000000000, StructName: "Planet", OtherBoosts: { ResearchFacility: 2 }, Description: "Discover absolutely everything on your Planets with advanced nerds and astronauts. Planets and Research Facilities are twice as efficient!", Requirements: { Structures: { Planet: 50, ResearchFacility: 100 } } },
         RubyMouse = { Name: "Ruby Mouse", Cost: 20000000000, StructName: "Clicker", Description: "Told you Ruby was better than Bloodstone. Clickers are twice as efficient!", Requirements: { Structures: { Clicker: 300 } } },
         Lunar = { Name: "Lunar Mechanics", Cost: 1660000000, StructName: "Factory", Description: "Pure lunar space power was found to be more efficient than using Uber powered mechanics. Your factories produce coins at the speed of light. Factories are twice as efficient!", Requirements: { Structures: { Factory: 200 } } },
-        InfiniteLuck = { Name: "Infinite Luck", Cost: 9999999999, StructName: "EightBall", Description: "Well technically your luck is finite, but I like to keep things 'creative' in this game. EightBalls are twice as efficient!", Requirements: { Structures: { EightBall: 200 } } },
+        InfiniteLuck = { Name: "Infinite Luck", Cost: 9999999999, StructName: "EightBall", Description: "Well technically your luck is finite, but I like to keep things 'creative' in this game. 8-Balls are twice as efficient!", Requirements: { Structures: { EightBall: 200 } } },
         Globalization = { Name: "Globalization", Cost: 17000000000, StructName: "Currency", Description: "Fun fact: 102% more people hate you now. Currencies are twice as efficient!", Requirements: { Structures: { Currency: 200 } } },
-        Neopolitan = { Name: "Neopolitan", Cost: 7900000000000, StructName: "TheMatrix", Description: "An absurdly expensive joke. TheMatrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 200 } } },
+        Neopolitan = { Name: "Neopolitan", Cost: 7900000000000, StructName: "TheMatrix", Description: "An absurdly expensive joke. The Matrixes are twice as efficient!", Requirements: { Structures: { TheMatrix: 200 } } },
         Decaclick = { Name: "Decaclick", Cost: 365000000000, CoinsPcPs: 0.08, Description: "Finally. Clicking earns 8% of your coins per second!", Requirements: { Stats: { CoinsPcPs: 0.17 } } },
         BeyondTheLimits = { Name: "Beyond The Limits", Cost: 128000000000, CoinsPc: 32, Multiply: true, Description: "Yeah, that's indeed beyond the limits of the 32 bit... Base coins per click is multiplied by 32.", Requirements: { Stats: { CoinsPc: 32735232 } } },
+        LunarImplementation = { Name: "Lunar Implementation", Cost: 100000000000000, StructName: "Atomizer", Description: "Lunar power is expensive. But why should you care? You are literally using star power to manipulate the fabric of reality. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 200 } } },
+        EightBallRandomFactor = { Name: "EightBall Random Factor", Cost: 88888888888, StructName: "MatterRefiner", OtherBoosts: { EightBall: 88 }, Description: "This is safe! Hey 8-Ball, should I destroy the universe? Matter Refiners are twice as efficient, 8-Balls are 88 times as efficient!", Requirements: { Structures: { MatterRefiner: 8, EightBall: 88 } } }
     ],
     achievements: [
         // TotalCoins
@@ -176,15 +178,25 @@ const gameitems = {
         MiningUniverse = { Name: "Mining Universe", Description: "So, you want to give us excavators and mining trucks yet? [100 Miners]", Type: "Structures", Requirements: { Miner: 100 } },
         TrueEconomist = { Name: "True Economist", Description: "Now do it with currencies ;) [100 Traders]", Type: "Structures", Requirements: { Trader: 100 } },
         ExpertEmployer = { Name: "Expert Employer", Description: "You could rival Wal-Mart. Maybe. Regardless, you're better than K-mart. [100 Businesses]", Type: "Structures", Requirements: { Business: 100 } },
-        ProductionLineOverlord = { Name: "Production Line Overlord", Description: "Now do it with currencies ;) [100 Factories]", Type: "Structures", Requirements: { Factory: 100 } },
-        BilliardsEnthusiast = { Name: "Billiards Enthusiast", Description: "That's a lot of insecurity... [100 EightBalls]", Type: "Structures", Requirements: { EightBall: 100} },
+        ProductionLineOverlord = { Name: "Production Line Overlord", Description: "You'd confuse anyone explaining how complex your operations are. [100 Factories]", Type: "Structures", Requirements: { Factory: 100 } },
+        BilliardsEnthusiast = { Name: "Billiards Enthusiast", Description: "That's a lot of insecurity... [100 8-Balls]", Type: "Structures", Requirements: { EightBall: 100} },
         CoinsBetterThanDoge = { Name: "Coinsssss > Doge", Description: "You showed that succubus of a Dogecoin promoter who is boss. [100 Currencies]", Type: "Structures", Requirements: { Currency: 100 } },
         CoinMesa = { Name: "Coin Mesa", Description: "Welcome to the Coin Mesa ResearchFacility. [100 Research Facilities]", Type: "Structures", Requirements: { ResearchFacility: 100 } },
-        IsThereAnyMatterLeft = { Name: "Is there any matter left?", Description: "No, seriously. [100 MatterRefiners]", Type: "Structures", Requirements: { MatterRefiner: 100 } },
+        IsThereAnyMatterLeft = { Name: "Is there any matter left?", Description: "No, seriously. [100 Matter Refiners]", Type: "Structures", Requirements: { MatterRefiner: 100 } },
         CoinGalaxies = { Name: "Coin Galaxies", Description: "You shaped this universe in your vision. [100 Planets]", Type: "Structures", Requirements: { Planet: 100 } },
-        AgentCoin = { Name: "Agent Coin", Description: "That's you! [100 TheMatrixes]", Type: "Structures", Requirements: { TheMatrix: 100 } },
+        AgentCoin = { Name: "Agent Coin", Description: "That's you! [100 The Matrixes]", Type: "Structures", Requirements: { TheMatrix: 100 } },
         ExtinctAtoms = { Name: "ExtinctAtoms", Description: "...You monster. [100 Atomizers]", Type: "Structures", Requirements: { Atomizer: 100 } },
-        Clickageddon = { Name: "Clickageddon", Description: "Enough clicks to end the world. [200 Clickers]", Type: "Structures", Requirements: { Clicker: 200 } },
+        Clickageddon = { Name: "Clickageddon", Description: "Enough clicks to end the world. [250 Clickers]", Type: "Structures", Requirements: { Clicker: 250 } },
+        MinedEverything = { Name: "Mined Everything", Description: "I'd hope so. [250 Miners]", Type: "Structures", Requirements: { Miner: 250 } },
+        ScammingConnoisseur = { Name: "Scamming Connoisseur", Description: "You know the ways of a villager. [250 Traders]", Type: "Structures", Requirements: { Trader: 250 } },
+        Globalism = { Name: "Globalism", Description: "As with the Currency upgrade. [250 Businesses]", Type: "Structures", Requirements: { Business: 250 } },
+        ProductionLineOverload = { Name: "Production Line Overload", Description: "Way too much. Also, see what I did there? [250 Factories]", Type: "Structures", Requirements: { Factory: 250 } },
+        BilliardsObsession = { Name: "Billiards Obsession", Description: "What's the matter with you? [250 8-Balls]", Type: "Structures", Requirements: { EightBall: 250 } },
+        MostExpensiveStock = { Name: "Most Expensive Stock", Description: "Anybody who was a early supporter is rolling in millions... [250 Currencies]", Type: "Structures", Requirements: { Currency: 250 } },
+        NerdCloning = { Name: "Nerd Cloning", Description: "Must be what you're doing. [250 Research Facilities]", Type: "Structures", Requirements: { ResearchFacility: 250 } },
+        NopeSeemsLikeTheresNoneLeft = { Name: "Nope Seems Like Theres None Left", Description: "That's not good. [250 Matter Refiners]", Type: "Structures", Requirements: { MatterRefiner: 250 } },
+        RealityIsALie = { Name: "Reality is a lie", Description: "Finally for once it's not the cake. [250 The Matrixes]", Type: "Structures", Requirements: { TheMatrix: 250 } },
+        EverythingIsCoins = { Name: "Everything is Coins", Description: "What is wrong with you? [250 Atomizers]", Type: "Structures", Requirements: { Atomizer: 250 } },
         // SumStructs
         Builder = { Name: "Builder", Description: "Keep going... [100 Structures]", Type: "SumStructs", Requirement: 100 },
         Entrepreneur = { Name: "Entrepreneur", Description: "That's a lot to keep track of... [250 Structures]", Type: "SumStructs", Requirement: 250 },
@@ -194,7 +206,7 @@ const gameitems = {
         // SumUpgrades
         Experimentalist = { Name: "Experimentalist", Description: "Hard to keep pace with all these upgrades requiring brilliance... [100 Upgrades]", Type: "SumUpgrades", Requirement: 100 },
         // Special
-        WiiU = { Name: "Wii U", Description: "You're officially cooler than all other players. [Play on Wii U]", Type: "Special" }
+        WiiU = { Name: "Wii U", Description: "You're officially cooler than all other players. [Play on Wii U]", Type: "Special", Shadow: true }
     ]
 }
 const fancynames = { // Any string you want to look fancy
@@ -247,6 +259,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const gamechangelog = {
+    "0.055 Alpha": "- Added more upgrades and achievements \n - Added achievement counter to title on stats page \n - Added shadow achivements which don't count towards your total",
     "0.052_1 Alpha": "- The save file won't exist on Wii U consoles so forget that last note",
     "0.052 Alpha": "- Added Wii U achievement for people who actually play this on a Wii U. It is also given to your primary save file if it exists.",
     "0.05 Alpha": "- 2 new CPC upgrades to help bridge the progression gap... need more...",
@@ -261,6 +274,25 @@ const gamechangelog = {
 function legacify(name) {
     const lowered = name.toLowerCase()
     return lowered.replace(" ", "")
+}
+
+function numacvs(owned) {
+    var num = 0
+
+    if (owned) {
+        for (acv in stats.Achievements) {
+            num++
+        }
+    }
+    else {
+        for (acv in gameitems.achievements) {
+            if (!gameitems.achievements[acv].Shadow) {
+                num++
+            }
+        }
+    }
+
+    return num
 }
 
 function bool(a) {
@@ -678,11 +710,12 @@ function shop(type, force) {
                         c[0].src = thisdata.Icon || ""
 
                         const sdata = stats.Structures[thisdata.Name]
+                        const name = thisdata.WiiUName || thisdata.Name
                         if (sdata) {
-                            c[1].innerText = (thisdata.Name + " - " + sdata.Amount) || "???"
+                            c[1].innerText = (name + " - " + sdata.Amount) || "???"
                         }
                         else {
-                            c[1].innerText = thisdata.Name || "???"
+                            c[1].innerText = name || "???"
                         }
                         c[2].innerText = thisdata.Description || "???"
 
@@ -710,6 +743,8 @@ function doStats() {
     const aui = document.getElementById("achievements")
     aui.innerHTML = null
 
+    document.getElementById("acvtitle").innerText = "ACHIEVEMENTS - (" + numacvs(true) + " / " + numacvs() + ")" 
+
     for (stat in stats) {
         const me = stats[stat]
 
@@ -728,7 +763,10 @@ function doStats() {
         const c = entry.children
 
         c[0].innerText = acv
-        c[2].innerText = findfromiv(gameitems.achievements, "Name", acv).Description
+
+        const data = findfromiv(gameitems.achievements, "Name", acv)
+        c[0].style.color = data.Shadow && "rgb(120, 25, 170)" || "rgb(0, 0, 0)"
+        c[2].innerText = data.Description
 
         entry.style.display = "block"
         aui.appendChild(entry)
