@@ -490,6 +490,8 @@ function load() {
                             // Main save file if exists
                             const main = localStorage.getItem("Data") 
 
+                            console.log(main)
+
                             if (main && main.Achievements) {
                                 main.Achievements[acv.Name] = true
 
