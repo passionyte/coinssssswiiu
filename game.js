@@ -203,6 +203,16 @@ const fancynames = { // Any string you want to look fancy
     CoinsMPc: "Coins per click PS bonus",
     TotalCoins: "Total coins"
 }
+const fancysettingnames = { // Wii U only
+    resetgame: "Reset game",
+    savegame: "Save game",
+    gotomain: "Go to main",
+    autosaving: "Auto saving",
+    shortnumbers: "Short numbers",
+    dynamicsitetitle: "Dynamic site title",
+    texteffects: "Text effects",
+    decimals: "Decimals"
+}
 const gamesettings = {
     // Function button types
     resetgame: function () {
@@ -234,7 +244,7 @@ const abbrs = { // Number abbreviations
     billion: 1e9,
     million: 1e6
 }
-const changelog = {
+const gamechangelog = {
     "0.05 Alpha": "- 2 new CPC upgrades to help bridge the progression gap... need more...",
     "0.049 Alpha": "- Added redirect button between versions",
     "0.048 Alpha": "- More upgrades and achievements",
@@ -727,8 +737,8 @@ function doChangelog() {
     const ui = document.getElementById("changelog")
     ui.innerHTML = null
 
-    for (vers in changelog) {
-        const log = changelog[vers]
+    for (vers in gamechangelog) {
+        const log = gamechangelog[vers]
 
         const entry = document.getElementById("logdummy").cloneNode(true)
 
@@ -755,11 +765,13 @@ function doSettings() {
     for (nm in gamesettings) {
         const set = gamesettings[nm]
 
+        var name = fancysettingnames[nm] || nm.toUpperCase()
+
         if (typeof (set) == "function") {
             const entry = document.getElementById("buttondummy").cloneNode(true)
 
             const b = entry.children[0]
-            b.innerText = nm.toUpperCase()
+            b.innerText = name
             entry.style.display = "block"
             ui.appendChild(entry)
 
@@ -770,7 +782,7 @@ function doSettings() {
 
             const b = entry.children[0]
             entry.Id = nm
-            b.innerText = nm.toUpperCase() + " : " + bool(stats.Settings[nm])
+            b.innerText = name + " : " + bool(stats.Settings[nm])
             entry.style.display = "block"
             ui.appendChild(entry)
 
@@ -791,7 +803,7 @@ function doSettings() {
             entry.Id = nm
 
             const c = entry.children
-            c[0].innerText = nm.toUpperCase() + " : "
+            c[0].innerText = name + " : "
             entry.style.display = "block"
             ui.appendChild(entry)
 
