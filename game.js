@@ -34,7 +34,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.052 Alpha - Wii U"
+const gameversion = "0.052_1 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
