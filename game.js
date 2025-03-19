@@ -152,7 +152,8 @@ const gameitems = {
         Decaclick = { Name: "Decaclick", Cost: 365000000000, CoinsPcPs: 0.08, Description: "Finally. Clicking earns 8% of your coins per second!", Requirements: { Stats: { CoinsPcPs: 0.17 } } },
         BeyondTheLimits = { Name: "Beyond The Limits", Cost: 128000000000, CoinsPc: 32, Multiply: true, Description: "Yeah, that's indeed beyond the limits of the 32 bit... Base coins per click is multiplied by 32.", Requirements: { Stats: { CoinsPc: 32735232 } } },
         LunarImplementation = { Name: "Lunar Implementation", Cost: 100000000000000, StructName: "Atomizer", Description: "Lunar power is expensive. But why should you care? You are literally using star power to manipulate the fabric of reality. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 200 } } },
-        EightBallRandomFactor = { Name: "EightBall Random Factor", Cost: 88888888888, StructName: "MatterRefiner", OtherBoosts: { EightBall: 88 }, Description: "This is safe! Hey 8-Ball, should I destroy the universe? Matter Refiners are twice as efficient, 8-Balls are 88 times as efficient!", Requirements: { Structures: { MatterRefiner: 8, EightBall: 88 } } }
+        EightBallRandomFactor = { Name: "EightBall Random Factor", Cost: 88888888888, StructName: "MatterRefiner", OtherBoosts: { EightBall: 88 }, Description: "This is safe! Hey 8-Ball, should I destroy the universe? Matter Refiners are twice as efficient, 8-Balls are 88 times as efficient!", Requirements: { Structures: { MatterRefiner: 8, EightBall: 88 } } },
+        AtomizerBundle = { Name: "Atomizer Bundle", Cost: 4800000000000, StructName: "Atomizer", OtherBoosts: { Currency: 60 }, Description: "Bundle a Atomizer with your stock! Atomizers are twice as efficient, Currencies are 60 times as efficient!", Requirements: { Structures: { Atomizer: 15, Currency: 75 } } }
     ],
     achievements: [
         // TotalCoins
