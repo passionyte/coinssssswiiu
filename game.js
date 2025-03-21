@@ -1048,6 +1048,10 @@ document.getElementById("changelogbutton").addEventListener("click", function() 
     menu("changelog")
 })
 
+document.getElementById("prestigebutton").addEventListener("click", function() {
+    openPrestige()
+})
+
 // Hard coded crap
 
 document.getElementById("version").innerText = "v" + gameversion
