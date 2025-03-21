@@ -374,6 +374,9 @@ function refresh() {
     else {
         document.title = "Passionyte's Coinsssss! for Wii U"
     }
+
+    document.getElementById("prestigecontainer").style.display = ((stats.PrestigeCoins >= 1 && stats.NextContinue == 0) && "inline-block") || "none"        
+    document.getElementById("prestigebar").style.width = ((1 - Math.abs((stats.PrestigeCoins - (Math.round((stats.PrestigeCoins + 0.5)))))) * 100) + "%"
 }
 
 function award(acv) {
