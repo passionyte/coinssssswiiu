@@ -1022,7 +1022,7 @@ document.getElementById("bcontinue").addEventListener("click", function() {
     pmenu.hidden = true
 })
 
-document.getElementById("bnevermind").addEventListener("click", _ => {
+document.getElementById("bnevermind").addEventListener("click", function() {
     pmenu.hidden = true
 })
 
