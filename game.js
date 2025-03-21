@@ -1001,7 +1001,7 @@ document.getElementById("bprestige").addEventListener("click", function() {
         stats.PrestigeLevel += pcoins
         stats.PrestigeBalance += pcoins
     
-        for (const def in blank) {
+        for (def in blank) {
             if (stats[def]) {
                 stats[def] = blank[def]
             }
