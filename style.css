@@ -1,63 +1,97 @@
 body {
-    background-color: rgb(255, 230, 120);
- }
- 
- .text {
-    font-family: 'Kavoon', 'Courier New', Courier, monospace
- }
- 
- .item {
-    background-color: rgb(226, 165, 59);
-    width: 70%;
-    height: fit-content;
-    padding-bottom: 2%;
-    padding-right: 2%;
-    border-color: rgb(190, 140, 45);
-    border-style: solid;
-    border-width: medium;
-    margin-bottom: 2%
- }
- 
- .itemtext {
-    width: 100%;
-    height: 20%;
-    display: block;
-    text-wrap: wrap;
-    word-wrap: break-word;
- }
- 
- .stat {
-    background-color: rgb(226, 165, 59);
-    border-color: rgb(190, 140, 45);
-    border-style: solid;
-    border-width: medium;
-    width: 90%;
-    display: none;
-    height: 5%;
- }
- 
- button {
-    font-family: 'Kavoon', 'Courier New', Courier, monospace;
-    background-color: rgb(255, 208, 0);
-    border-color: rgb(190, 140, 45);
-    cursor: pointer
- }
- 
- .menu {
-    background-color: rgb(255, 210, 100);
-    font-family: 'Kavoon', 'Courier New', Courier, monospace;
-    height: 100%;
-    border-color: rgb(200, 160, 65);
-    border-style: solid;
-    border-width: thick;
- }
- 
- .imenu {
-    margin-top: 10%;
-    margin-bottom: 10%;
- }
- 
- #textdummy {
-    font-weight: bold;
-    color:antiquewhite
- }
+   background-image: linear-gradient(rgb(255, 230, 120), rgb(255, 240, 160));
+}
+
+.text {
+   font-family: 'Kavoon', 'Courier New', Courier, monospace
+}
+
+.item {
+   background-color: rgb(226, 165, 59);
+   width: 70%;
+   height: fit-content;
+   padding-bottom: 2%;
+   padding-right: 2%;
+   border-color: rgb(190, 140, 45);
+   border-style: solid;
+   border-width: medium;
+   margin-bottom: 2%
+}
+
+.itemtext {
+   width: 100%;
+   height: 20%;
+   display: block;
+   text-wrap: wrap;
+   word-wrap: break-word;
+}
+
+.stat {
+   background-color: rgb(226, 165, 59);
+   border-color: rgb(190, 140, 45);
+   border-style: solid;
+   border-width: medium;
+   width: 90%;
+   display: none;
+   height: 5%;
+}
+
+button {
+   font-family: 'Kavoon', 'Courier New', Courier, monospace;
+   background-color: rgb(255, 208, 0);
+   border-color: rgb(190, 140, 45);
+   aspect-ratio: 4/1;
+   width: 20%;
+   cursor: pointer
+}
+
+.menu {
+   background-color: rgb(255, 210, 100);
+   font-family: 'Kavoon', 'Courier New', Courier, monospace;
+   height: 100%;
+   border-color: rgb(200, 160, 65);
+   border-style: solid;
+   border-width: thick;
+}
+
+.imenu {
+   margin-top: 10%;
+   margin-bottom: 10%;
+}
+
+#textdummy {
+   font-weight: bold;
+   color:antiquewhite
+}
+
+.basicbg {
+  background-color: rgb(255, 210, 100);
+  border-color: rgb(200, 160, 65);
+  border-style: solid;
+  border-width: thick;
+}
+
+.fakecoin {
+  background-image: url(images/coin.png);
+  aspect-ratio: 1/1; 
+  background-repeat: no-repeat; 
+  background-size: 100% 100%;
+  background-color: transparent;
+  border-color: transparent;
+  position: absolute;
+}
+
+.centerwtext {
+  font-family: 'Kavoon', 'Courier New', Courier, monospace;
+  position: absolute;
+  width: 100%;
+  right: 0%;
+  text-align: center
+}
+
+.centerytext {
+  font-family: 'Kavoon', 'Courier New', Courier, monospace;
+  position: absolute;
+  bottom: 0%;
+  text-align: center
+}

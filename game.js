@@ -9,6 +9,7 @@ const itemlist = document.getElementById("items")
 const structb = document.getElementById("structures")
 const upgb = document.getElementById("upgrades")
 const effs = document.getElementById("effects")
+const pmenu = document.getElementById("choice")
 
 // Variables
 
@@ -21,6 +22,12 @@ var stats = {
     CoinsPsMult: 1,
     TotalCoins: 0,
     Clicks: 0,
+    PrestigeCoins: 0,
+    PrestigeLevel: 0,
+    PrestigeBalance: 0,
+    Prestiges: 0,
+    NextContinue: 0,
+    Continues: 0,
     Purchased: {},
     Structures: {},
     Achievements: {},
@@ -34,7 +41,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.056 Alpha - Wii U"
+const gameversion = "0.063_1 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -155,7 +162,9 @@ const gameitems = {
         EightBallRandomFactor = { Name: "EightBall Random Factor", Cost: 88888888888, StructName: "MatterRefiner", OtherBoosts: { EightBall: 88 }, Description: "This is safe! Hey 8-Ball, should I destroy the universe? Matter Refiners are twice as efficient, 8-Balls are 88 times as efficient!", Requirements: { Structures: { MatterRefiner: 8, EightBall: 88 } } },
         AtomizerBundle = { Name: "Atomizer Bundle", Cost: 4800000000000, StructName: "Atomizer", OtherBoosts: { Currency: 60 }, Description: "Bundle a Atomizer with your stock! Atomizers are twice as efficient, Currencies are 60 times as efficient!", Requirements: { Structures: { Atomizer: 15, Currency: 75 } } },
         Compatibility = { Name: "Compatibility", Cost: 85000000000000, StructName: "Atomizer", OtherBoosts: { MatterRefiner: 8 }, Description: "Make your Atomizers compatible with your old Matter Refiners. Atomizers are twice as efficient, Matter Refiners are 8 times as efficient!", Requirements: { Structures: { Atomizer: 50, MatterRefiner: 100} } },
-        FabricManipulators = { Name: "Fabric Manipulators", Cost: 210000000000000, StructName: "Atomizer", Description: "No, not as in carpets.. the fabric of reality. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 100 } } }
+        FabricManipulators = { Name: "Fabric Manipulators", Cost: 210000000000000, StructName: "Atomizer", Description: "No, not as in carpets.. the fabric of reality. Atomizers are twice as efficient!", Requirements: { Structures: { Atomizer: 100 } } },
+        BinaryFortune = { Name: "Binary Fortune", Cost: 10100000000000, CoinsPsMult: 4, Description: "01010100 01110101 01110010 01101110 01110011 00100000 01100001 01101110 01111001 01110100 01101000 01101001 01101110 01100111 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01100111 01100001 01101101 01100101 00100000 01101001 01101110 01110100 01101111 00100000 01100011 01101111 01101001 01101110 01110011. Gives 400% production multiplier.", Requirements: { Stats: { Continues: 1 } } },
+        EverythingIsBinary = { Name: "Everything Is Binary", Cost: 101010101010101, StructName: "TheMatrix", StructMult: 10, OtherBoosts: {MatterRefiner: 2, EightBall: 101, Clicker: 11, Miner: 1010, Trader: 500, Business: 404, Factory: 333, ResearchFacility: 20, Planet: 11, Atomizer: 2 }, Description: "Realizing everything is not as it seems grants you massively exponential boosts. All structures are marginally more efficient.", Requirements: { Stats: { Continues: 3, Clicks: 10101, CoinsPsMult: 15 } } }
     ],
     achievements: [
         // TotalCoins
@@ -167,6 +176,10 @@ const gameitems = {
         Trillionaire = { Name: "Trillionaire", Description: "You should stop playing now...", Type: "Stat", Requirements: { TotalCoins: 1e12 } },
         Quadrillionaire = { Name: "Quadrillionaire", Description: "Absolute insanity.", Type: "Stat", Requirements: { TotalCoins: 1e15 } },
         Quintillionaire = { Name: "Quintillionaire", Description: "When this was added it wasn't even possible to reach...", Type: "Stat", Requirements: { TotalCoins: 1e18 } },
+        // Continues
+        BackSoSoon = { Name: "Back So Soon?", Description: "Good luck out there. [1 continue]", Type: "Stat", Requirements: { Continues: 1 } },
+        // Prestiges
+        Reborn = { Name: "Reborn", Description: "Hey, you're here again. [1 prestige]", Type: "Stat", Requirements: { Prestiges: 1 } },
         // CoinsPs
         AMintASecond = { Name: "A Mint A Second", Description: "Every second: [Insert coin sound effect here] [1 cps]", Type: "Stat", Requirements: { CoinsPs: 1 } },
         CoinFlow = { Name: "Coin Flow", Description: "Sweet!!! [10 cps]", Type: "Stat", Requirements: { CoinsPs: 10 } },
@@ -218,7 +231,11 @@ const fancynames = { // Any string you want to look fancy
     CoinsPc: "Coins per click",
     CoinsPcPs: "Coins per click (% of PS)",
     CoinsMPc: "Coins per click PS bonus",
-    TotalCoins: "Total coins"
+    TotalCoins: "Total coins",
+    PrestigeCoins: "Current prestige coins",
+    PrestigeLevel: "Prestige level (+1% of PS)",
+    PrestigeBalance: "Prestige coin balance",
+    NextContinue: "Seconds until next continue"
 }
 const fancysettingnames = { // Wii U only
     resetgame: "Reset game",
@@ -262,6 +279,9 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const gamechangelog = {
+    "0.063_1 Alpha": "- Adjusted delay between continues from 1 hour to 30 minutes for less pain to the player",
+    "0.063 Alpha": "- Prestige coins can now be kept as a currency (currently nothing to buy though) \n - Prestige count is now tracked \n - Added more achievements and upgrades \n - Fixed it so you can actually prestige (lol)",
+    "0.06 Alpha": "- Added prestige system, you can prestige and forfeit everything for a CPS boost or continue with new structures and upgrades \n - No additional content for it... yet \n - UI improvements",
     "0.056 Alpha": "- More upgrades",
     "0.055 Alpha": "- Added more upgrades and achievements \n - Added achievement counter to title on stats page \n - Added shadow achivements which don't count towards your total",
     "0.052_1 Alpha": "- The save file won't exist on Wii U consoles so forget that last note",
@@ -346,7 +366,7 @@ function refresh() {
     const coins = abbreviate(Math.floor(stats.Coins))
 
     clicks.innerText = coins.toString() + " coins"
-    prod.innerText = abbreviate(smartround(stats.CoinsPs * stats.CoinsPsMult)) + " coins/s"
+    prod.innerText = abbreviate(smartround(stats.CoinsPs * (stats.CoinsPsMult + (stats.PrestigeLevel / 100)))) + " coins/s"
 
     if (stats.Settings.dynamicsitetitle) {
         document.title = coins.toString() + " coins - Passionyte's Coinsssss! for Wii U"
@@ -533,15 +553,14 @@ function load() {
     setInterval(astep, 2000)
 }
 
-function save() {
-    if (stats.Coins > 0 && loaded && !savecd) {
+function save(force) {
+    if ((stats.Coins > 0 && loaded && !savecd) || force) {
         localStorage.setItem("WiiUData", JSON.stringify(stats))
         savecd = true
 
-        function a() {
+        setTimeout(function() {
             savecd = false
-        }
-        setTimeout(a, 15000)
+        }, 15000)
 
         effect("Text", { lifetime: 3, position: { x: 40, y: 75, pc: true }, text: "Saved game" })
     }
@@ -678,7 +697,7 @@ function purchase(name, type) {
             }
         }
 
-        stats.CoinsMPc = (stats.CoinsPs * stats.CoinsPcPs)
+        stats.CoinsMPc = ((stats.CoinsPs * (stats.CoinsPsMult + (stats.PrestigeLevel / 100))) * stats.CoinsPcPs)
         
         refresh()
         shop(type, true)
@@ -839,15 +858,13 @@ function doSettings() {
             entry.style.display = "block"
             ui.appendChild(entry)
 
-            function handler() {
+            b.addEventListener("click", function() {
                 setSetting(entry.Id, true)
                 doSettings()
                 if (shopopen) {
                     shop(shopopen, true)
                 }
-            }
-
-            b.addEventListener("click", handler)
+            })
         }
         else {
             const mytype = typeof (set)
@@ -860,7 +877,7 @@ function doSettings() {
             entry.style.display = "block"
             ui.appendChild(entry)
 
-            function handler() {
+            c[2].addEventListener("click", function() {
                 var input = c[1].value
 
                 if (mytype == "number") {
@@ -874,10 +891,17 @@ function doSettings() {
                         }
                     }
                 }
-            }
-
-            c[2].addEventListener("click", handler)
+            })
         }
+    }
+}
+
+function openPrestige() {
+    if (stats.PrestigeCoins >= 1 && stats.NextContinue == 0) {
+        const c = pmenu.children
+
+        c[2].children[1].innerText = "You will gain " + Math.round(stats.PrestigeCoins) + " prestige levels and coin balance, however you have to forfeit everything."
+        pmenu.hidden = false
     }
 }
 
@@ -934,30 +958,25 @@ function menu(type) {
 
 // Listeners
 
-function coinclick() {
+bigbutton.addEventListener("click", function() {
     const x = (stats.CoinsPc + stats.CoinsMPc)
     stats.Coins += x
     stats.TotalCoins += x
+    stats.PrestigeCoins += (x / 1e12)
     stats.Clicks++
     refresh()
     effect("Text", { click: true, lifetime: 1 })
-}
+})
 
-bigbutton.addEventListener("click", coinclick)
-
-function handlempos(ev) {
+bigbutton.addEventListener("mousemove", function(ev) {
     coinmpos = { x: ev.clientX, y: ev.clientY }
-}
+})
 
-bigbutton.addEventListener("mousemove", handlempos)
-
-function ondown() {
+bigbutton.addEventListener("mousedown", function() {
     bigbutton.style.width = 48 + "%"
     bigbutton.style.left = 1 + "%"
     bigbutton.style.top = 1 + "%"
-}
-
-bigbutton.addEventListener("mousedown", ondown)
+})
 
 function onup() {
     bigbutton.style.width = 50 + "%"
@@ -968,35 +987,63 @@ function onup() {
 bigbutton.addEventListener("mouseup", onup)
 bigbutton.addEventListener("mouseleave", onup)
 
-function strhandler() {
+// Prestige menu
+
+const prestiged = false
+document.getElementById("bprestige").addEventListener("click", function() {
+    if (!prestiged) {
+        stats.Prestiges++
+
+        const pcoins = Math.round(stats.PrestigeCoins)
+        stats.PrestigeLevel += pcoins
+        stats.PrestigeBalance += pcoins
+    
+        for (const def in blank) {
+            if (stats[def]) {
+                stats[def] = blank[def]
+            }
+        }
+    
+        save(true)
+        setTimeout(_ => {
+            location.reload()
+        }, 1000)
+    }
+})
+
+document.getElementById("bcontinue").addEventListener("click", function() {
+    stats.PrestigeCoins = 0
+    stats.NextContinue = 1800 // 30 minutes
+    stats.Continues++
+
+    pmenu.hidden = true
+})
+
+document.getElementById("bnevermind").addEventListener("click", _ => {
+    pmenu.hidden = true
+})
+
+// Buttons
+
+structb.addEventListener("click", function() {
     shop("structures")
-}
+})
 
-structb.addEventListener("click", strhandler)
-
-function upghandler() {
+upgb.addEventListener("click", function() {
     shop("upgrades")
-}
+})
 
-upgb.addEventListener("click", upghandler)
-
-function statshandler() {
+document.getElementById("statsbutton").addEventListener("click", function() {
     menu("stats")
-}
+})
 
-document.getElementById("statsbutton").addEventListener("click", statshandler)
-
-function settingshandler() {
+document.getElementById("settingsbutton").addEventListener("click", function() {
     menu("settings")
-}
+})
 
-document.getElementById("settingsbutton").addEventListener("click", settingshandler)
-
-function changeloghandler() {
+document.getElementById("changelogbutton").addEventListener("click", function() {
     menu("changelog")
-}
-
-document.getElementById("changelogbutton").addEventListener("click", changeloghandler)
+})
 
 // Hard coded crap
 
@@ -1010,13 +1057,17 @@ for (nm in gamesettings) {
     }
 }
 
-function step() {
-    const x = ((stats.CoinsPs * stats.CoinsPsMult) / fps)
+setInterval(function() {
+    const x = ((stats.CoinsPs * (stats.CoinsPsMult + (stats.PrestigeLevel / 100))) / fps)
     stats.Coins += x
     stats.TotalCoins += x
-    refresh()
-}
+    stats.PrestigeCoins += (x / 1e12)
 
-setInterval(step, fps)
+    if (stats.NextContinue > 0) {
+        stats.NextContinue -= (1 / fps)
+    }
+
+    refresh()
+}, fps)
 
 setTimeout(load, 1000)

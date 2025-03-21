@@ -10,8 +10,9 @@
    </head>
 
    <body>
-       <div id="loading" style="width: 100%; height: 100%">
-           <a class="text">Loading!</a>
+       <div id="loading" class="basicbg" style="width: 100%; height: 100%; position: absolute">
+            <a class="centerwtext" style="top: 25%; font-size: 50px">Coinsssss!</a>
+            <a class="centerwtext" style="top: 50%; font-size: 40px">Loading...</a>
        </div>
        <div id="effects" style="position: absolute; width: 100%; height: 100%; pointer-events:none;">
            <a id="textdummy" style="position: absolute; display: none" class="text"></a>
@@ -40,6 +41,11 @@
            <div id="top" style="text-align: center;">
                 <button class="text" id="statsbutton" style="float: left" >Stats</button>
                 <button class="text" id="changelogbutton" style="display: inline-block" >Changelog</button>
+
+                <div id="prestigecontainer" style="display: none; aspect-ratio: 4/1; width: 20%">
+                    <button class="text" id="prestigebutton" style="height: 100%; width: 100%">Prestige</button>
+                    <div id="prestigebar" style="background-color: rgba(0, 150, 255, 0.5); height: 15%; width: 0%"></div>
+               </div>
                 <button class="text" id="settingsbutton" style="float: right" >Settings</button>
            </div>
            <div id="menu" style="width: 100%; height: 100%; margin-top: 20%">
@@ -58,17 +64,17 @@
                     <a style="display: contents; font-size: 12px">Insert stuffs here</a>
                 </div>
                <div id="buttondummy" class="stat">
-                   <button style="font-weight: bold">Click me</button>
+                   <button style="font-weight: bold; width: 30%">Click me</button>
                </div>
                <div id="booldummy" class="stat">
-                   <button style="font-weight: bold">Something : ON</button>
+                   <button style="font-weight: bold; width: 40%; aspect-ratio: 6/1">Something : ON</button>
                </div>
                <div id="inputdummy" style="font-weight: bold" class="stat">
                    <label for="this">Something : </label>
                    <input id="this"></input>
-                   <button style="float: right; margin-top: 5px">Confirm</button>
+                   <button style="float: right; margin-top: 5px; width: 25%">Confirm</button>
                </div>
-               <div id="stats" class="imenu" hidden></div>
+               <div id="stats" class="imenu" style="overflow-y: scroll; max-height: 30%" hidden></div>
                <a id="acvtitle" style="height: 10%; font-size: 20px; font-weight: bold" hidden>ACHIEVEMENTS</a>
                <div id="achievements" style="overflow-y: scroll; max-height: 20%" class="imenu" hidden></div>
                <div id="settings" class="imenu" hidden></div>
@@ -86,9 +92,24 @@
                    <img src="" style="aspect-ratio: inherit; height: 42px; width: 42px; float: left; margin-right: 10px">
                    <a class="itemtext" style="font-size: 16px; font-weight: bold">Title</a>
                    <a class="itemtext" style="font-size: 12px; margin-bottom: 20px">Description</a>
-                   <button class="text" style="display: block">Purchase for 0 coins</button>
+                   <button class="text" style="display: block; width: 40%; aspect-ratio: 6/1">Purchase for 0 coins</button>
                </div>
            </div>
        </div>
+       <div id="choice" class="basicbg" style="width: 100%; height: 100%; position: absolute" hidden>
+            <a class="centerwtext" style="font-size: 50px; top: 15%">Make your choice.</a>
+            <button class="fakecoin" id="bcontinue" style="left: 33%; top: 31%; filter: hue-rotate(-30deg); width: 13%">
+                <a class="centerwtext" style="top: 50%; font-size:20px">Continue</a>
+                <a class="centerwtext" style="top: 100%; font-size:14px">You will unlock more upgrades and structures, and you keep everything except your current prestige coins.</a>     
+            </button>
+            <button class="fakecoin" id="bprestige" style="left: 53%; top: 31%; filter: hue-rotate(180deg); width: 13%">
+                <a class="centerwtext" style="top: 50%; font-size:20px">Prestige</a>
+                <a class="centerwtext" style="top: 100%; font-size:14px">You will gain 0 prestige levels and coin balance, however you have to forfeit everything.</a>    
+            </button>
+
+            <button class="text" id="bnevermind" style="position: absolute; left: 45%; right: 0%; top: 68%; aspect-ratio: 5/1; width: 10%">Nevermind</button>
+            <a class="centerwtext" style="font-size: 18px; font-style: italic; bottom: 20%">You will be able to return to this menu later.</a>
+            <a class="centerwtext" style="font-size: 14px; font-style: italic; bottom: 17%">(You will require at least 1 prestige coin in your next session, and will have to wait 1 hour if you chose 'Continue')</a>
+        </div>
    </body>
 </html>
