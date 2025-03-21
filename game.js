@@ -1008,7 +1008,7 @@ document.getElementById("bprestige").addEventListener("click", function() {
         }
     
         save(true)
-        setTimeout(_ => {
+        setTimeout(function() {
             location.reload()
         }, 1000)
     }
