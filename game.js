@@ -41,7 +41,7 @@ var menurf
 var coinmpos
 var itemdummies = []
 
-const gameversion = "0.063_1 Alpha - Wii U"
+const gameversion = "0.063_2 Alpha - Wii U"
 const fps = 30
 
 const gameitems = {
@@ -272,6 +272,11 @@ const gamesettings = {
     decimals: 2
 }
 const abbrs = { // Number abbreviations
+    decillion: 1e33,
+    nonillion: 1e30,
+    octillion: 1e27,
+    septillion: 1e24,
+    sextillion: 1e21,
     quintillion: 1e18,
     quadrillion: 1e15,
     trillion: 1e12,
@@ -279,6 +284,7 @@ const abbrs = { // Number abbreviations
     million: 1e6
 }
 const gamechangelog = {
+    "0.063_2 Alpha": "- More number abbreviations \n - Balancing to prestiging will come soon",
     "0.063_1 Alpha": "- Adjusted delay between continues from 1 hour to 30 minutes for less pain to the player",
     "0.063 Alpha": "- Prestige coins can now be kept as a currency (currently nothing to buy though) \n - Prestige count is now tracked \n - Added more achievements and upgrades \n - Fixed it so you can actually prestige (lol)",
     "0.06 Alpha": "- Added prestige system, you can prestige and forfeit everything for a CPS boost or continue with new structures and upgrades \n - No additional content for it... yet \n - UI improvements",
